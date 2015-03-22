@@ -15,7 +15,7 @@
     <link href="css/soundbuzz.css" rel="stylesheet">
   </head>
 
-  <body onload="loaded()">    
+  <body>    
     <nav class="navbar-default navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -57,18 +57,12 @@
                 <div class="form-group">
                     <select class="form-control">
                       <option>Last hour</option>
-                      <option>Last 24H</option>
+                      <option>Last 24h</option>
                       <option>Last week</option>
                     </select>
                 </div>    
             </li> 
           </ul>
-          <ul class="nav nav-sidebar">
-            <li>      
-               <label for="genres"><p class="text-muted text-center">Choose genres</p></label> 
-               <input type="text" class="form-control" value="" data-role="tagsinput"/> 
-            </li> 
-          </ul> 
           <ul class="nav nav-sidebar">
             <li>   
               <label for="tags"><p class="text-muted text-center">Choose tags</p></label>
@@ -97,12 +91,5 @@
     <script src="http://connect.soundcloud.com/sdk.js"></script>
     <script src="js/DOM.js"></script>
     <script src="js/app.js"></script>
-    <script src="js/iscroll.js"></script>  
-    <script>
-        var myScroll = new IScroll('.main', {
-            mouseWheel: true,
-            scrollbars: true
-        });
-    </script>  
   </body>
 </html>
