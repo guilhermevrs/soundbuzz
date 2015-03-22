@@ -4,7 +4,7 @@ author: guilhermevrs
 */
 
 SC.initialize({
-  client_id: 'YOUR_CLIENT_ID'
+  client_id: '581b5c41bbf8308284bfa16743d9c86d'
 });
 
 SC.get('/playlists/1234323', function(playlist) {
