@@ -9,7 +9,7 @@ var SoundBuzz = (function(){
     /*CONSTANTS*/
     var MAX_ITERATIONS = 3;
 
-    me.iteration = 0;
+    me.iteration = 1;
 
     me.setMode = function(mode){
         me.mode = mode;
@@ -24,7 +24,8 @@ var SoundBuzz = (function(){
         me.setWindow(window);
         me.genres = genres;
         me.tags = tags;
-        _getTracks(new Date());
+        me.iteration = 1;
+        _getTracks(_nextTimeInWindow());
     }
 
     function _padDatePart(part){
@@ -42,14 +43,31 @@ var SoundBuzz = (function(){
     };
 
     function _nextTimeInWindow(){
-        var newTime = new Date();
+        var startTime = new Date();
+        var endTime = new Date();
+        var decrement;
         switch(me.windowMode){
-            case 'hour': newTime.setMinutes(newTime.getMinutes() - (me.iteration * 15)); break;
-            case 'day': newTime.setHours(newTime.getHours() - (me.iteration * 6)); break;
+            case 'hour':
+            decrement = (me.iteration) * 15;
+            startTime.setMinutes(startTime.getMinutes() - decrement);
+            endTime.setMinutes(endTime.getMinutes() - (decrement - 15));
+            break;
+            case 'day':
+            decrement = (me.iteration) * 6;
+            startTime.setHours(startTime.getHours() - decrement);
+            endTime.setMinutes(endTime.getMinutes() - (decrement - 6));
+            break;
             case 'week':
-            default: newTime.setDate(newTime.getDate() - (me.iteration * 2));break;
+            default:
+            decrement = (me.iteration) * 2;
+            startTime.setDate(startTime.getDate() - decrement);
+            endTime.setDate(endTime.getDate() - (decrement - 2));
+            break;
         }
-        return newTime;
+        return {
+            from: _toSoundcloudDate(startTime),
+            to: _toSoundcloudDate(endTime)
+        };
     };
 
     function _processTracks(tracks){
@@ -57,17 +75,19 @@ var SoundBuzz = (function(){
         var filteredTracks = _filterTracks(tracks);
         _upsertTracks(tracks);
 
-        var itemContainer = document.createElement('div');
-        itemContainer.classList.add('col-md-9');
-        itemContainer.classList.add('col-md-offset-1');
-        itemContainer.classList.add('placeholders');
+        if(tracks.length > 0){
+            var itemContainer = document.createElement('div');
+            itemContainer.classList.add('col-md-9');
+            itemContainer.classList.add('col-md-offset-1');
+            itemContainer.classList.add('placeholders');
 
-        SC.oEmbed(tracks[0].uri, {
-            maxheight: '100%'
-        },  itemContainer);
+            SC.oEmbed(tracks[0].uri, {
+                maxheight: '100%'
+            },  itemContainer);
 
-        var container = document.getElementById('content-target');
-        container.appendChild(itemContainer);
+            var container = document.getElementById('content-target');
+            container.appendChild(itemContainer);
+        }
 
         if(me.iteration >= MAX_ITERATIONS){
             /*TODO: What to do when we already have all past data?*/
@@ -87,16 +107,14 @@ var SoundBuzz = (function(){
     }
 
     function _getTracks(createAt){
-        var scCreateAt = _toSoundcloudDate(createAt);
-        console.log(scCreateAt);
-        SC.get('/tracks', {
-            genres: me.genres,
-            tag_list: me.tags,
-            created_at:{
-                from: scCreateAt
-            },
-            limit:200
-       }, _processTracks);
+        getOptions = {};
+        getOptions.limit = 200;
+        getOptions.created_at = createAt;
+        if(me.tags && me.tags !== ''){
+            getOptions.tags = me.tags;
+        }
+        console.log(getOptions);
+        SC.get('/tracks', getOptions, _processTracks);
     };
 
     return me;
