@@ -114,8 +114,8 @@ var SoundBuzz = (function(){
         var tracksLen = tracks.length;
         for(var i = 0; i < tracksLen ; i++){
             var referenceDate = new Date(tracks[i].created_at);
-            var referenceHour = _getReferenceHours(referenceDate);
-            var bottomRef = bottomFunc(referenceHour);
+            var referenceDays = _getReferenceDays(referenceDate);
+            var bottomRef = bottomFunc(referenceDays);
             var topRef;
             if(topFunc){
                 topRef = topFunc(referenceHour);
@@ -132,13 +132,14 @@ var SoundBuzz = (function(){
         return filteredTracks;
     }
 
-    function _getReferenceHours(trackDate){
-        return Math.abs(me.referenceDate - trackDate) / 36e5;
+    function _getReferenceDays(trackDate){
+        var timeDiff = Math.abs(me.referenceDate.getTime() - trackDate.getTime());
+        return Math.ceil(timeDiff / (1000 * 3600 * 24));
     }
 
-    function _buzzyAlgo(hour){
+    function _buzzyAlgo(days){
         //200000 / 1 + exp(-4 * (x-2))
-        return 200000 / ( 1 + Math.exp( -4 * (hour - 2) ) )
+        return 200000 / ( 1 + Math.exp( -7 * (days - 3) ) )
     };
 
     function _trendyAlgo(hour){
