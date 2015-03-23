@@ -15,7 +15,7 @@
     <link href="css/soundbuzz.css" rel="stylesheet">
   </head>
 
-  <body>    
+  <body>
     <nav class="navbar-default navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -32,16 +32,16 @@
             <li><a href="#">Help</a></li>
             <li><a href="#">About</a></li>
           </ul>
-        </div><!--/.nav-collapse -->    
+        </div><!--/.nav-collapse -->
       </div>
     </nav>
 
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-        <form role="form" onSubmit="">
+        <form role="form" onsubmit="return formSubmit()">
           <ul class="nav nav-sidebar">
-            <li> 
+            <li>
                 <label for="type"><p class="text-muted text-center">Choose a trend</p></label>
                 <div class="form-group">
                     <select class="form-control">
@@ -49,8 +49,8 @@
                       <option>Trendy</option>
                     </select>
                 </div>
-            </li> 
-          </ul>  
+            </li>
+          </ul>
           <ul class="nav nav-sidebar">
             <li>
                 <label for="period"><p class="text-muted text-center">Choose a time</p></label>
@@ -60,20 +60,20 @@
                       <option>Last 24h</option>
                       <option>Last week</option>
                     </select>
-                </div>    
-            </li> 
+                </div>
+            </li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li>   
+            <li>
               <label for="tags"><p class="text-muted text-center">Choose tags</p></label>
-              <input type="text" class="form-control" value="" data-role="tagsinput"/> 
-            </li> 
-          </ul>  
+              <input type="text" class="form-control" value="" data-role="tagsinput"/>
+            </li>
+          </ul>
           <ul class="nav nav-sidebar">
             <li>
               <input class="btn btn-default" type="submit" value="Submit">
             </li>
-          </ul>   
+          </ul>
         </form>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -89,7 +89,7 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap-tagsinput.min.js"></script>
     <script src="http://connect.soundcloud.com/sdk.js"></script>
+    <script src="js/Soundbuzz.js"></script>
     <script src="js/DOM.js"></script>
-    <script src="js/app.js"></script>
   </body>
 </html>

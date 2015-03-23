@@ -1,5 +1,5 @@
 /*
-App.js
+Soundbuzz.js
 author: guilhermevrs
 */
 
@@ -19,12 +19,12 @@ var SoundBuzz = (function(){
         me.windowMode = window;
     };
 
-    me.getBuzz = function(mode, genres, tags, window){
+    me.getBuzz = function(mode, tags, window){
         me.setMode(mode);
         me.setWindow(window);
-        me.genres = genres;
         me.tags = tags;
         me.iteration = 1;
+        me.referenceDate = new Date();
         _getTracks(_nextTimeInWindow());
     }
 
@@ -71,9 +71,10 @@ var SoundBuzz = (function(){
     };
 
     function _processTracks(tracks){
+        /*TODO: Work with the filtered tracks*/
+        /*TODO: Separate track showing method*/
         console.log(tracks);
         var filteredTracks = _filterTracks(tracks);
-        _upsertTracks(tracks);
 
         if(tracks.length > 0){
             var itemContainer = document.createElement('div');
@@ -97,13 +98,46 @@ var SoundBuzz = (function(){
         }
     }
 
-    function _upsertTracks(tracks){
+    function _filterTracks(tracks){
+        var topFunc;
+        var bottomFunc;
+        switch(me.mode){
+            case 'buzzy': bottomFunc = _buzzyAlgo; break;
+            case 'trendy': bottomFunc = _trendyAlgo; topFunc = _buzzyAlgo; break;
+            case 'groovy': default:bottomFunc = _groovyAlgo; topFunc = _trendyAlgo; break;
+        }
+
+        var filteredTracks = [];
+        var tracksLen = tracks.length;
+        for(var i = 0; i < tracksLen ; i++){
+            var referenceHour = _getReferenceHours(tracks[i].created_at);
+            var bottomRef = bottomFunc(referenceHour);
+            var topRef;
+            if(topFunc){
+                topRef = topFunc(referenceHour);
+            }
+            if(tracks[i].playback_count > bottomRef && (!topRef || tracks[i].playback_count < topRef)){
+                filteredTracks.push(tracks[i]);
+            }
+        }
+
+        return filteredTracks;
+    }
+
+    function _getReferenceHours(trackDate){
+        return Math.abs(me.referenceDate - trackDate) / 36e5;
+    }
+
+    function _buzzyAlgo(hour){
+        /*TODO*/
+    };
+
+    function _trendyAlgo(hour){
         /*TODO*/
     }
 
-    function _filterTracks(tracks){
+    function _groovyAlgo(hour){
         /*TODO*/
-        return tracks;
     }
 
     function _getTracks(createAt){
@@ -119,10 +153,6 @@ var SoundBuzz = (function(){
 
     return me;
 })();
-
-function formSubmit(){
-
-}
 
 SC.initialize({
   client_id: '581b5c41bbf8308284bfa16743d9c86d'
