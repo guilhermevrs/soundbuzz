@@ -44,9 +44,10 @@
             <li>
                 <label for="type"><p class="text-muted text-center">Choose a trend</p></label>
                 <div class="form-group">
-                    <select class="form-control">
-                      <option>Buzzy</option>
-                      <option>Trendy</option>
+                    <select id="cboModeSelector" class="form-control">
+                      <option value="buzzy">Buzzy</option>
+                      <option value="trendy">Trendy</option>
+                      <option value="groovy">Groovy</option>
                     </select>
                 </div>
             </li>
@@ -55,10 +56,10 @@
             <li>
                 <label for="period"><p class="text-muted text-center">Choose a time</p></label>
                 <div class="form-group">
-                    <select class="form-control">
-                      <option>Last hour</option>
-                      <option>Last 24h</option>
-                      <option>Last week</option>
+                    <select id="cboWindowSelector" class="form-control">
+                      <option value="hour">Last hour</option>
+                      <option value="day">Last 24h</option>
+                      <option value="week">Last week</option>
                     </select>
                 </div>
             </li>
@@ -66,7 +67,7 @@
           <ul class="nav nav-sidebar">
             <li>
               <label for="tags"><p class="text-muted text-center">Choose tags</p></label>
-              <input type="text" class="form-control" value="" data-role="tagsinput"/>
+              <input type="text" id="txtTags" class="form-control" value="" data-role="tagsinput"/>
             </li>
           </ul>
           <ul class="nav nav-sidebar">

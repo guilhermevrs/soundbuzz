@@ -4,7 +4,9 @@ author: morgl
 */
 
 function formSubmit(){
-    /*TODO: Get the values from form field*/
-    SoundBuzz.getBuzz(null, 'dance', 'week');
+    var mode = jQuery('#cboModeSelector').val();
+    var tags = jQuery('#txtTags').val();
+    var window = jQuery('#cboWindowSelector').val();
+    SoundBuzz.getBuzz(mode, tags, window);
     return false;
 }
