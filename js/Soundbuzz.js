@@ -10,6 +10,8 @@ var SoundBuzz = (function(){
     var MAX_ITERATIONS = 3;
 
     me.iteration = 1;
+    me.maxPlayCount = -1;
+    me.minPlayCount = -1;
 
     me.setMode = function(mode){
         me.mode = mode;
@@ -24,6 +26,8 @@ var SoundBuzz = (function(){
         me.setWindow(window);
         me.tags = tags;
         me.iteration = 1;
+        me.maxPlayCount = -1;
+        me.minPlayCount = -1;
         me.referenceDate = new Date();
         _getTracks(_nextTimeInWindow());
     }
@@ -45,25 +49,16 @@ var SoundBuzz = (function(){
     function _nextTimeInWindow(){
         var startTime = new Date();
         var endTime = new Date();
-        var decrement;
+        var step;
         switch(me.windowMode){
-            case 'hour':
-            decrement = (me.iteration) * 15;
-            startTime.setMinutes(startTime.getMinutes() - decrement);
-            endTime.setMinutes(endTime.getMinutes() - (decrement - 15));
-            break;
-            case 'day':
-            decrement = (me.iteration) * 6;
-            startTime.setHours(startTime.getHours() - decrement);
-            endTime.setMinutes(endTime.getMinutes() - (decrement - 6));
-            break;
-            case 'week':
-            default:
-            decrement = (me.iteration) * 2;
-            startTime.setDate(startTime.getDate() - decrement);
-            endTime.setDate(endTime.getDate() - (decrement - 2));
-            break;
+            case '1week': step = 2; break;
+            case '2weeks': step = 4; break;
+            case 'month':
+            default: step = 8; break;
         }
+        var decrement = (me.iteration) * step;
+        startTime.setDate(startTime.getDate() - decrement);
+        endTime.setDate(endTime.getDate() - (decrement - step));
         return {
             from: _toSoundcloudDate(startTime),
             to: _toSoundcloudDate(endTime)
@@ -99,6 +94,7 @@ var SoundBuzz = (function(){
 
         if(me.iteration >= MAX_ITERATIONS){
             /*TODO: What to do when we already have all past data?*/
+            console.log('MaxPlayCount', me.maxPlayCount, 'MinPlayCount', me.minPlayCount);
         } else {
             me.iteration++;
             _getTracks(_nextTimeInWindow());
@@ -125,6 +121,10 @@ var SoundBuzz = (function(){
                 topRef = topFunc(referenceHour);
             }
             if(tracks[i].playback_count > bottomRef && (!topRef || tracks[i].playback_count < topRef)){
+                if(me.minPlayCount == -1 || me.minPlayCount > tracks[i].playback_count)
+                    me.minPlayCount = tracks[i].playback_count;
+                if(me.maxPlayCount == -1 || me.maxPlayCount < tracks[i].playback_count)
+                    me.maxPlayCount = tracks[i].playback_count;
                 filteredTracks.push(tracks[i]);
             }
         }
