@@ -70,24 +70,31 @@ var SoundBuzz = (function(){
         };
     };
 
-    function _processTracks(tracks){
-        /*TODO: Work with the filtered tracks*/
-        /*TODO: Separate track showing method*/
-        console.log(tracks);
-        var filteredTracks = _filterTracks(tracks);
-
-        if(tracks.length > 0){
-            var itemContainer = document.createElement('div');
+    function _appendTrackDom(track){
+        /*TODO: Create lazy loading*/
+        /*TODO: Use SC.Widget instead, to create playlist?*/
+        var itemContainer = document.createElement('div');
             itemContainer.classList.add('col-md-9');
             itemContainer.classList.add('col-md-offset-1');
             itemContainer.classList.add('placeholders');
 
-            SC.oEmbed(tracks[0].uri, {
+            SC.oEmbed(track.uri, {
                 maxheight: '100%'
             },  itemContainer);
 
             var container = document.getElementById('content-target');
             container.appendChild(itemContainer);
+    }
+
+    function _processTracks(tracks){
+        /*TODO: Work with the filtered tracks*/
+        console.log(tracks.length);
+        var filteredTracks = _filterTracks(tracks);
+        console.log(filteredTracks);
+
+        var trackLen = filteredTracks.length;
+        for(var i = 0; i < trackLen; i++){
+            _appendTrackDom(filteredTracks[i]);
         }
 
         if(me.iteration >= MAX_ITERATIONS){
@@ -110,7 +117,8 @@ var SoundBuzz = (function(){
         var filteredTracks = [];
         var tracksLen = tracks.length;
         for(var i = 0; i < tracksLen ; i++){
-            var referenceHour = _getReferenceHours(tracks[i].created_at);
+            var referenceDate = new Date(tracks[i].created_at);
+            var referenceHour = _getReferenceHours(referenceDate);
             var bottomRef = bottomFunc(referenceHour);
             var topRef;
             if(topFunc){
@@ -129,7 +137,8 @@ var SoundBuzz = (function(){
     }
 
     function _buzzyAlgo(hour){
-        /*TODO*/
+        //200000 / 1 + exp(-4 * (x-2))
+        return 200000 / ( 1 + Math.exp( -4 * (hour - 2) ) )
     };
 
     function _trendyAlgo(hour){
