@@ -6,6 +6,10 @@ author: guilhermevrs
 var Player = (function(){
     var me = {};
 
+    me.isPlaying = false;
+    me.isPaused = false;
+    me.togglePlayCallback;
+
     options = {};
     options.containerId = 'content-target';
 
@@ -31,7 +35,11 @@ var Player = (function(){
     }
 
     me.play = function(index){
-        index = index || loadedIndex;
+        if(!index){
+            index = loadedIndex;
+        } else {
+            me.isPaused = false;
+        }
         if(loadTracks.length > index){
             var audioUrl = loadTracks[index].uri;
         } else {
@@ -45,11 +53,19 @@ var Player = (function(){
                 widget.bind(SC.Widget.Events.PLAY, function(evt){
                     widget.getCurrentSound(_onPlay);
                 });
+                widget.bind(SC.Widget.Events.FINISH, function(evt){
+                    _onFinish();
+                });
             });
         } else {
-            widget.load(audioUrl, {
-                auto_play: true
-            });
+            if(!me.isPaused){
+                widget.load(audioUrl, {
+                    auto_play: true
+                });
+            } else {
+                me.isPaused = false;
+                widget.play();
+            }
         }
         return true;
     };
@@ -64,6 +80,7 @@ var Player = (function(){
 
     me.forward = function(){
         if((loadTracks.length - 1) > loadedIndex){
+            me.isPaused = false;
             loadedIndex++;
             me.play();
         }
@@ -71,14 +88,37 @@ var Player = (function(){
 
     me.backward = function(){
         if(loadedIndex > 0){
+            me.isPaused = false;
             loadedIndex--;
             me.play();
         }
     };
 
+    me.pause = function(){
+        widget.pause();
+        me.isPlaying = false;
+        me.isPaused = true;
+        if(me.togglePlayCallback)
+            asyncCall(me.togglePlayCallback, false);
+    }
+
     function _onPlay(sound){
         var titleDisplay = document.getElementById('player-current-title');
         titleDisplay.textContent = sound.user.username + ' - ' + sound.title;
+        me.isPlaying = true;
+        if(me.togglePlayCallback)
+            asyncCall(me.togglePlayCallback, true);
+    };
+
+    function _onFinish(){
+        me.isPlaying = false;
+        if(me.togglePlayCallback)
+            asyncCall(me.togglePlayCallback, false);
+        me.forward();
+    };
+
+    function asyncCall(fn, params){
+        setTimeout(function(){fn(params)},0);
     }
 
     return me;

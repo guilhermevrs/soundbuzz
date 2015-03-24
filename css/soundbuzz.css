@@ -192,13 +192,13 @@ body {
  */
 
 .miniature:hover {
-  z-index: 0;   
+  z-index: 0;
   opacity:0.9;
 }
 
 .play {
-  z-index: 9999;    
-  opacity: 0; 
+  z-index: 9999;
+  opacity: 0;
   color: #ff6600;
   font-size:80px;
   left:37%;
@@ -207,11 +207,11 @@ body {
 }
 
 .play:hover {
-  opacity: 1; 
+  opacity: 1;
 }
 
 .pause {
-  z-index: 9999;    
+  z-index: 9999;
   color: #ff6600;
   font-size:80px;
   left:37%;

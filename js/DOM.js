@@ -24,7 +24,10 @@ $( "#content-target" ).on( "click", ".play, .pause", function() {
 });
 
 $( '#player-control-play' ).click(function(){
-    Player.play();
+    if(!Player.isPlaying)
+        Player.play();
+    else
+        Player.pause();
 });
 
 $( '#player-control-backward' ).click(function(){
@@ -42,3 +45,10 @@ function formSubmit(){
     SoundBuzz.getBuzz(mode, tags, window, onTrackShow);
     return false;
 };
+
+Player.togglePlayCallback = function(isPlaying){
+    var span = $('#player-control-play').find('.glyphicon');
+    if((Player.isPlaying && span.hasClass('glyphicon-play')) ||
+      (!Player.isPlaying && span.hasClass('glyphicon-pause')))
+    span.toggleClass('glyphicon-play').toggleClass('glyphicon-pause');
+}
