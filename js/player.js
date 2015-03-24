@@ -19,6 +19,9 @@ var Player = (function(){
             iframe = document.createElement('iframe');
             iframe.id = 'player-iframe';
             contentContainer.insertBefore(iframe, contentContainer.firstChild);
+            iframe.width = '100%';
+            iframe.scrolling = 'no';
+            iframe.frameBorder = 'no';
             iframe.src = 'https://w.soundcloud.com/player/?url=' + audioUrl + '&auto_play=true';
         } else {
             iframe = iframe[0];
