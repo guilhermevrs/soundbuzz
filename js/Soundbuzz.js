@@ -137,17 +137,29 @@ var SoundBuzz = (function(){
         return Math.ceil(timeDiff / (1000 * 3600 * 24));
     }
 
-    function _buzzyAlgo(days){
-        //200000 / 1 + exp(-4 * (x-2))
-        return 200000 / ( 1 + Math.exp( -7 * (days - 3) ) )
+    function _buzzyAlgo(hour){
+        //d + (a - d) / ( 1 + (x/c)^b )
+        var a = 6598.582;
+        var b = 2.857;
+        var c = 11.715;
+        var d = 2112895.000;
+        return d + ( a - d ) / ( 1 + Math.pow( hour/c, b ) )
     };
 
     function _trendyAlgo(hour){
-        /*TODO*/
+        var a = 1701.007;
+        var b = 2.501;
+        var c = 15.668;
+        var d = 583022.100;
+        return d + ( a - d ) / ( 1 + Math.pow( hour/c, b ) )
     }
 
     function _groovyAlgo(hour){
-        /*TODO*/
+        var a = -287.476;
+        var b = 1.956;
+        var c = 15.480;
+        var d = 155259.300;
+        return d + ( a - d ) / ( 1 + Math.pow( hour/c, b ) )
     }
 
     function _getTracks(createAt){
