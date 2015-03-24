@@ -27,6 +27,14 @@ $( '#player-control-play' ).click(function(){
     Player.play();
 });
 
+$( '#player-control-backward' ).click(function(){
+    Player.backward();
+});
+
+$( '#player-control-forward' ).click(function(){
+    Player.forward();
+});
+
 function formSubmit(){
     var mode = $('#cboModeSelector').val();
     var tags = $('#txtTags').val();

@@ -11,6 +11,7 @@ var Player = (function(){
 
     var contentContainer = document.getElementById(options.containerId);
     var widget;
+    var loadedIndex = 0;
     var loadTracks = [];
 
     function _prepareIframe(audioUrl){
@@ -29,13 +30,12 @@ var Player = (function(){
         return iframe;
     }
 
-    me.play = function(audioUrl){
-        if(!audioUrl || audioUrl === ''){
-            if(loadTracks.length !== 0){
-                audioUrl = loadTracks[0].uri;
-            } else {
-                console.error('No loaded tracks');
-            }
+    me.play = function(index){
+        index = index || loadedIndex;
+        if(loadTracks.length > index){
+            var audioUrl = loadTracks[index].uri;
+        } else {
+            console.error('No loaded tracks');
         }
 
         if(!widget){
@@ -60,6 +60,20 @@ var Player = (function(){
 
     me.clearTracks = function(){
         loadTracks = [];
+    };
+
+    me.forward = function(){
+        if((loadTracks.length - 1) > loadedIndex){
+            loadedIndex++;
+            me.play();
+        }
+    };
+
+    me.backward = function(){
+        if(loadedIndex > 0){
+            loadedIndex--;
+            me.play();
+        }
     };
 
     function _onPlay(sound){
