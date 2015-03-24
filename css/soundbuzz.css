@@ -236,19 +236,21 @@ body {
     width:100%;
 }
 
-.btn-default{
+.btn-default, .btn-default:focus {
     color: #fff;
     background-color: #ff6600;
     border-color:transparent;
+    outline: none;
 }
 
-.btn-default:hover, .btn-default:active, .btn-default:focus{
+.btn-default:hover, .btn-default:active {
     color: #fff;
     background-color: #db5e0b;
     border-color:transparent;
+    outline: none;
 }
 
-.form-control:focus, .btn-default:focus, .btn:focus{
+.form-control:focus{
     border-color: #ff6600;
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(255, 102, 0, 0.6);
 }
