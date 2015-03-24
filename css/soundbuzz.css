@@ -109,7 +109,7 @@ body {
 }
 
 /*
- * Custom SoundBuzz CSS
+ * Custom SoundBuzz navbar CSS
  */
 
 .navbar-default {
@@ -180,14 +180,51 @@ body {
   color: #fff;
   background-color: #ff6600;
 }
-.label-info {
-  background-color: #ff6600;
-}
 
 .nav-sidebar > li{
-    width:80%;
-    text-align:center;
-    margin:auto;
+  width:80%;
+  text-align:center;
+  margin:auto;
+}
+
+/*
+ * Miniature
+ */
+
+.miniature:hover {
+  z-index: 0;   
+  opacity:0.9;
+}
+
+.play {
+  z-index: 9999;    
+  opacity: 0; 
+  color: #ff6600;
+  font-size:80px;
+  left:37%;
+  top:30%;
+  position:absolute;
+}
+
+.play:hover {
+  opacity: 1; 
+}
+
+.pause {
+  z-index: 9999;    
+  color: #ff6600;
+  font-size:80px;
+  left:37%;
+  top:30%;
+  position:absolute;
+}
+
+/*
+ * Other
+ */
+
+.label-info {
+  background-color: #ff6600;
 }
 
 .bootstrap-tagsinput {
