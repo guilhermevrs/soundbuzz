@@ -146,11 +146,19 @@ var SoundBuzz = (function(){
     };
 
     function _trendyAlgo(hour){
-        /*TODO*/
+        var a = 1701.007;
+        var b = 2.501;
+        var c = 15.668;
+        var d = 583022.100;
+        return d + ( a - d ) / ( 1 + Math.pow( hour/c, b ) )
     }
 
     function _groovyAlgo(hour){
-        /*TODO*/
+        var a = -287.476;
+        var b = 1.956;
+        var c = 15.480;
+        var d = 155259.300;
+        return d + ( a - d ) / ( 1 + Math.pow( hour/c, b ) )
     }
 
     function _getTracks(createAt){
