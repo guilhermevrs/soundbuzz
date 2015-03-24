@@ -82,7 +82,6 @@ var SoundBuzz = (function(){
     }
 
     function _processTracks(tracks){
-        /*TODO: Work with the filtered tracks*/
         console.log(tracks.length);
         var filteredTracks = _filterTracks(tracks);
         console.log(filteredTracks);
@@ -118,7 +117,7 @@ var SoundBuzz = (function(){
             var bottomRef = bottomFunc(referenceDays);
             var topRef;
             if(topFunc){
-                topRef = topFunc(referenceHour);
+                topRef = topFunc(referenceDays);
             }
             if(tracks[i].playback_count > bottomRef && (!topRef || tracks[i].playback_count < topRef)){
                 if(me.minPlayCount == -1 || me.minPlayCount > tracks[i].playback_count)
