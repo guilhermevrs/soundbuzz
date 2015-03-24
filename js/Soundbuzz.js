@@ -137,8 +137,12 @@ var SoundBuzz = (function(){
     }
 
     function _buzzyAlgo(hour){
-        //200000 / 1 + exp(-4 * (x-2))
-        return 200000 / ( 1 + Math.exp( -4 * (hour - 2) ) )
+        //d + (a - d) / ( 1 + (x/c)^b )
+        var a = 3908;
+        var b = 3.857;
+        var c = 16.7;
+        var d = 218542;
+        return d + ( a - d ) / ( 1 + Math.pow( hour/c, b ) )
     };
 
     function _trendyAlgo(hour){
