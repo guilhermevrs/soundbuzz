@@ -33,6 +33,11 @@ var Player = (function(){
         if(!widget){
             var iframe = _prepareIframe(audioUrl);
             widget = SC.Widget(iframe);
+            widget.bind(SC.Widget.Events.READY, function() {
+                widget.bind(SC.Widget.Events.PLAY, function(evt){
+                    widget.getCurrentSound(_onPlay);
+                });
+            });
         } else {
             widget.load(audioUrl, {
                 auto_play: true
@@ -40,6 +45,11 @@ var Player = (function(){
         }
         return true;
     };
+
+    function _onPlay(sound){
+        var titleDisplay = document.getElementById('player-current-title');
+        titleDisplay.textContent = sound.user.username + ' - ' + sound.title;
+    }
 
     return me;
 })();
