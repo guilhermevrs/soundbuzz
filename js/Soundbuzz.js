@@ -138,10 +138,10 @@ var SoundBuzz = (function(){
 
     function _buzzyAlgo(hour){
         //d + (a - d) / ( 1 + (x/c)^b )
-        var a = 3908;
-        var b = 3.857;
-        var c = 16.7;
-        var d = 218542;
+        var a = 6598.582;
+        var b = 2.857;
+        var c = 11.715;
+        var d = 2112895.000;
         return d + ( a - d ) / ( 1 + Math.pow( hour/c, b ) )
     };
 
