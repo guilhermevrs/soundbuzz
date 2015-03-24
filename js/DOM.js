@@ -6,7 +6,7 @@ author: morgl
 function onTrackShow(evt){
     var trackLen = evt.tracks.length;
     for(var i = 0; i < trackLen; i++){
-        var track = tracks[i];
+        var track = evt.tracks[i];
         var itemContainer = document.createElement('div');
             itemContainer.classList.add('col-md-9');
             itemContainer.classList.add('col-md-offset-1');

@@ -80,7 +80,7 @@ var SoundBuzz = (function(){
             asyncCall(me.callback, callbackVal);
         }
 
-        if(!callback.finish){
+        if(!callbackVal.finish){
             me.iteration++;
             _getTracks(_nextTimeInWindow());
         } else{
