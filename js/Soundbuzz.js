@@ -21,10 +21,12 @@ var SoundBuzz = (function(){
         me.windowMode = window;
     };
 
-    me.getBuzz = function(mode, tags, window){
+    me.getBuzz = function(mode, tags, window, callback){
         me.setMode(mode);
         me.setWindow(window);
         me.tags = tags;
+        me.callback = callback;
+
         me.iteration = 1;
         me.maxPlayCount = -1;
         me.minPlayCount = -1;
@@ -65,40 +67,29 @@ var SoundBuzz = (function(){
         };
     };
 
-    function _appendTrackDom(track){
-        /*TODO: Create lazy loading*/
-        /*TODO: Use SC.Widget instead, to create playlist?*/
-        var itemContainer = document.createElement('div');
-            itemContainer.classList.add('col-md-9');
-            itemContainer.classList.add('col-md-offset-1');
-            itemContainer.classList.add('placeholders');
-
-            SC.oEmbed(track.uri, {
-                maxheight: '100%'
-            },  itemContainer);
-
-            var container = document.getElementById('content-target');
-            container.appendChild(itemContainer);
-    }
-
     function _processTracks(tracks){
-        /*TODO: Work with the filtered tracks*/
         console.log(tracks.length);
         var filteredTracks = _filterTracks(tracks);
         console.log(filteredTracks);
 
-        var trackLen = filteredTracks.length;
-        for(var i = 0; i < trackLen; i++){
-            _appendTrackDom(filteredTracks[i]);
+        var callbackVal = {};
+        callbackVal.finish = (me.iteration >= MAX_ITERATIONS);
+        callbackVal.tracks = filteredTracks;
+
+        if(me.callback){
+            asyncCall(me.callback, callbackVal);
         }
 
-        if(me.iteration >= MAX_ITERATIONS){
-            /*TODO: What to do when we already have all past data?*/
-            console.log('MaxPlayCount', me.maxPlayCount, 'MinPlayCount', me.minPlayCount);
-        } else {
+        if(!callbackVal.finish){
             me.iteration++;
             _getTracks(_nextTimeInWindow());
+        } else{
+            console.log('MaxPlayCount', me.maxPlayCount, 'MinPlayCount', me.minPlayCount);
         }
+    }
+
+    function asyncCall(fn, value){
+        setTimeout(function(){fn(value);}, 0);
     }
 
     function _filterTracks(tracks){
@@ -118,7 +109,7 @@ var SoundBuzz = (function(){
             var bottomRef = bottomFunc(referenceDays);
             var topRef;
             if(topFunc){
-                topRef = topFunc(referenceHour);
+                topRef = topFunc(referenceDays);
             }
             if(tracks[i].playback_count > bottomRef && (!topRef || tracks[i].playback_count < topRef)){
                 if(me.minPlayCount == -1 || me.minPlayCount > tracks[i].playback_count)
@@ -137,17 +128,29 @@ var SoundBuzz = (function(){
         return Math.ceil(timeDiff / (1000 * 3600 * 24));
     }
 
-    function _buzzyAlgo(days){
-        //200000 / 1 + exp(-4 * (x-2))
-        return 200000 / ( 1 + Math.exp( -7 * (days - 3) ) )
+    function _buzzyAlgo(hour){
+        //d + (a - d) / ( 1 + (x/c)^b )
+        var a = 6598.582;
+        var b = 2.857;
+        var c = 11.715;
+        var d = 2112895.000;
+        return d + ( a - d ) / ( 1 + Math.pow( hour/c, b ) )
     };
 
     function _trendyAlgo(hour){
-        /*TODO*/
+        var a = 1701.007;
+        var b = 2.501;
+        var c = 15.668;
+        var d = 583022.100;
+        return d + ( a - d ) / ( 1 + Math.pow( hour/c, b ) )
     }
 
     function _groovyAlgo(hour){
-        /*TODO*/
+        var a = -287.476;
+        var b = 1.956;
+        var c = 15.480;
+        var d = 155259.300;
+        return d + ( a - d ) / ( 1 + Math.pow( hour/c, b ) )
     }
 
     function _getTracks(createAt){

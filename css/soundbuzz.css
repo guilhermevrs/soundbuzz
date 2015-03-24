@@ -109,7 +109,7 @@ body {
 }
 
 /*
- * Custom SoundBuzz CSS
+ * Custom SoundBuzz navbar CSS
  */
 
 .navbar-default {
@@ -180,31 +180,77 @@ body {
   color: #fff;
   background-color: #ff6600;
 }
-.label-info {
-  background-color: #ff6600;
-}
 
 .nav-sidebar > li{
-    width:80%;
-    text-align:center;
-    margin:auto;
+  width:80%;
+  text-align:center;
+  margin:auto;
+}
+
+/*
+ * Miniature
+ */
+
+.miniature:hover {
+  z-index: 0;
+  opacity:0.9;
+}
+
+.play {
+  z-index: 9999;
+  opacity: 0;
+  color: #ff6600;
+  font-size:80px;
+  left:37%;
+  top:30%;
+  position:absolute;
+}
+
+.play:hover {
+  opacity: 1;
+}
+
+.pause {
+  z-index: 9999;
+  color: #ff6600;
+  font-size:80px;
+  left:37%;
+  top:30%;
+  position:absolute;
+}
+
+/*
+ * Other
+ */
+
+
+#player-iframe {
+  display: none;
+}
+
+.label-info {
+  background-color: #ff6600;
 }
 
 .bootstrap-tagsinput {
     width:100%;
 }
 
-.btn-default{
+.btn-default, .btn-default:focus {
     color: #fff;
     background-color: #ff6600;
+    border-color:transparent;
+    outline: none;
 }
 
-.btn-default:hover, .btn-default:active, .btn-default:focus{
+.btn-default:hover, .btn-default:active {
     color: #fff;
     background-color: #db5e0b;
+    border-color:transparent;
+    outline: none;
 }
 
-.form-control:focus, .btn-default:focus, .btn:focus{
+.form-control:focus{
     border-color: #ff6600;
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(255, 102, 0, 0.6);
 }
