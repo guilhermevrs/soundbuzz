@@ -10,8 +10,8 @@ var Player = (function(){
     options.containerId = 'content-target';
 
     var contentContainer = document.getElementById(options.containerId);
-
     var widget;
+    var loadTracks = [];
 
     function _prepareIframe(audioUrl){
         var iframe = document.querySelectorAll('#' + options.containerId + ' #player-iframe');
@@ -30,6 +30,14 @@ var Player = (function(){
     }
 
     me.play = function(audioUrl){
+        if(!audioUrl || audioUrl === ''){
+            if(loadTracks.length !== 0){
+                audioUrl = loadTracks[0].uri;
+            } else {
+                console.error('No loaded tracks');
+            }
+        }
+
         if(!widget){
             var iframe = _prepareIframe(audioUrl);
             widget = SC.Widget(iframe);
@@ -44,6 +52,14 @@ var Player = (function(){
             });
         }
         return true;
+    };
+
+    me.addTracks = function(tracks){
+        loadTracks = loadTracks.concat(tracks);
+    };
+
+    me.clearTracks = function(){
+        loadTracks = [];
     };
 
     function _onPlay(sound){
