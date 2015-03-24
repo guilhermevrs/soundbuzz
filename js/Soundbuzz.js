@@ -21,10 +21,12 @@ var SoundBuzz = (function(){
         me.windowMode = window;
     };
 
-    me.getBuzz = function(mode, tags, window){
+    me.getBuzz = function(mode, tags, window, callback){
         me.setMode(mode);
         me.setWindow(window);
         me.tags = tags;
+        me.callback = callback;
+
         me.iteration = 1;
         me.maxPlayCount = -1;
         me.minPlayCount = -1;
@@ -65,39 +67,29 @@ var SoundBuzz = (function(){
         };
     };
 
-    function _appendTrackDom(track){
-        /*TODO: Create lazy loading*/
-        /*TODO: Use SC.Widget instead, to create playlist?*/
-        var itemContainer = document.createElement('div');
-            itemContainer.classList.add('col-md-9');
-            itemContainer.classList.add('col-md-offset-1');
-            itemContainer.classList.add('placeholders');
-
-            SC.oEmbed(track.uri, {
-                maxheight: '100%'
-            },  itemContainer);
-
-            var container = document.getElementById('content-target');
-            container.appendChild(itemContainer);
-    }
-
     function _processTracks(tracks){
         console.log(tracks.length);
         var filteredTracks = _filterTracks(tracks);
         console.log(filteredTracks);
 
-        var trackLen = filteredTracks.length;
-        for(var i = 0; i < trackLen; i++){
-            _appendTrackDom(filteredTracks[i]);
+        var callbackVal = {};
+        callbackVal.finish = (me.iteration >= MAX_ITERATIONS);
+        callbackVal.tracks = filteredTracks;
+
+        if(me.callback){
+            asyncCall(me.callback, callbackVal);
         }
 
-        if(me.iteration >= MAX_ITERATIONS){
-            /*TODO: What to do when we already have all past data?*/
-            console.log('MaxPlayCount', me.maxPlayCount, 'MinPlayCount', me.minPlayCount);
-        } else {
+        if(!callback.finish){
             me.iteration++;
             _getTracks(_nextTimeInWindow());
+        } else{
+            console.log('MaxPlayCount', me.maxPlayCount, 'MinPlayCount', me.minPlayCount);
         }
+    }
+
+    function asyncCall(fn, value){
+        setTimeout(function(){fn(value);}, 0);
     }
 
     function _filterTracks(tracks){
