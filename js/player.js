@@ -100,7 +100,11 @@ var Player = (function(){
         me.isPaused = true;
         if(me.togglePlayCallback)
             asyncCall(me.togglePlayCallback, false);
-    }
+    };
+
+    me.getTrackCount = function(){
+        return loadTracks.length;
+    };
 
     function _onPlay(sound){
         var titleDisplay = document.getElementById('player-current-title');
