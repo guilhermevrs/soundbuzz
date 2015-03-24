@@ -223,6 +223,11 @@ body {
  * Other
  */
 
+
+#player-iframe {
+  display: none;
+}
+
 .label-info {
   background-color: #ff6600;
 }
@@ -234,11 +239,13 @@ body {
 .btn-default{
     color: #fff;
     background-color: #ff6600;
+    border-color:transparent;
 }
 
 .btn-default:hover, .btn-default:active, .btn-default:focus{
     color: #fff;
     background-color: #db5e0b;
+    border-color:transparent;
 }
 
 .form-control:focus, .btn-default:focus, .btn:focus{
