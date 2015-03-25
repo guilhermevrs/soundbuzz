@@ -274,7 +274,7 @@ body {
 }
 
 .loading {
-    position:absolute;
+    position:fixed;
     width:100%;
     top:0;
     left:0;
@@ -292,5 +292,5 @@ body {
 
 .nothing {
     font-style: italic;
-    color: #908c8c; 
+    color: #908c8c;
 }
