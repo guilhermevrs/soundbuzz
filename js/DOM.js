@@ -11,19 +11,21 @@ function onTrackShow(evt){
         var track = evt.tracks[i];
         var itemContainer = $( "<div>", { class: "col-xs-12 col-sm-6 col-md-3  placeholders"} );
         var miniatureContainer = $( '<div>', { class : 'miniature' } ).appendTo(itemContainer);
-        $( '<img />', { src : track.artwork_url.replace('large','t200x200') } ).appendTo(miniatureContainer);
+        if ( track.artwork_url ) {
+            $( '<img />', { src : track.artwork_url.replace('large','t200x200') } ).appendTo(miniatureContainer);
+        }
         $( '<span>', { 'data-trackindex': trackCount + i, class : 'play glyphicon glyphicon-play' } ).appendTo(miniatureContainer);
         $('#content-target').append(itemContainer);
     }
     if(evt.finish){
+        $('#overlay').removeClass('loading');
+        $('#loading').remove()
         console.log('FINISHED');
     }
 };
 
 $( "#content-target" ).on( "click", ".play, .pause", function() {
-    var $this = $(this);
-    $('#content-target').find('.pause').removeClass('pause glyphicon-pause');
-    $this.toggleClass("play glyphicon-play pause glyphicon-pause");
+    $(this).toggleClass("play glyphicon-play pause glyphicon-pause");
     if(!Player.isPlaying)
         Player.play($this.data('trackindex'));
     else
@@ -50,6 +52,8 @@ function formSubmit(){
     var tags = $('#txtTags').val();
     var window = $('#cboWindowSelector').val();
     SoundBuzz.getBuzz(mode, tags, window, onTrackShow);
+    $('#overlay').addClass('loading');
+    $('#overlay').append( $( '<div>', { id : 'loading' } ) );
     return false;
 };
 
