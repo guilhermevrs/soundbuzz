@@ -25,7 +25,8 @@ function onTrackShow(evt){
 };
 
 $( "#content-target" ).on( "click", ".play, .pause", function() {
-    $(this).toggleClass("play glyphicon-play pause glyphicon-pause");
+    var $this = $(this);
+    $this.toggleClass("play glyphicon-play pause glyphicon-pause");
     if(!Player.isPlaying)
         Player.play($this.data('trackindex'));
     else

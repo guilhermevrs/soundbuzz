@@ -38,7 +38,9 @@ var Player = (function(){
         if(!index){
             index = loadedIndex;
         } else {
-            me.isPaused = false;
+            if(loadedIndex !== index)
+                me.isPaused = false;
+            loadedIndex = index;
         }
         if(loadTracks.length > index){
             var audioUrl = loadTracks[index].uri;
