@@ -12,7 +12,7 @@ var Player = (function(){
     me.currentIndex = 0;
 
     options = {};
-    options.containerId = 'content-target';
+    options.containerId = 'iframe-container';
 
     var contentContainer = document.getElementById(options.containerId);
     var widget;
@@ -78,6 +78,13 @@ var Player = (function(){
 
     me.clearTracks = function(){
         loadTracks = [];
+        if(widget){
+            me.isPaused = false;
+            me.isPlaying = false;
+            widget.pause();
+            var titleDisplay = document.getElementById('player-current-title');
+        titleDisplay.textContent = '';
+        }
     };
 
     me.forward = function(){

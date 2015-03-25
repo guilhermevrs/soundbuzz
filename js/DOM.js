@@ -15,7 +15,7 @@ function onTrackShow(evt){
             $( '<img />', { src : track.artwork_url.replace('large','t200x200') } ).appendTo(miniatureContainer);
         }
         $( '<span>', { 'data-trackindex': trackCount + i, class : 'miniature-play play glyphicon glyphicon-play' }     ).appendTo(miniatureContainer);
-        itemContainer.appendTo('#content-target').hide().fadeIn(600);   
+        itemContainer.appendTo('#content-target').hide().fadeIn(600);
     }
     if(evt.finish){
         unloading();
@@ -77,13 +77,14 @@ function unloading(){
 
 
 function show_nothing_found(){
+    $('#player-control-play').find('.glyphicon').removeClass('glyphicon-pause').addClass('glyphicon-play');
     $('#content-target').html('');
-    $( '<img />', { src   : 'img/badass.png', 
-                    alt   : 'not found', 
+    $( '<img />', { src   : 'img/badass.png',
+                    alt   : 'not found',
                     class : 'placeholders' } ).appendTo('#content-target');
-    $( '<p>', { class : 'badass', 
+    $( '<p>', { class : 'badass',
                 text  : 'Watch out we got a badass over here' } ).appendTo('#content-target');
-    $( '<p>', { class : 'nothing', 
+    $( '<p>', { class : 'nothing',
                 text  : 'Nothing matches your demands, your highness...'} ).appendTo('#content-target');
 }
 
