@@ -71,7 +71,7 @@ function formSubmit(){
     var mode = $('#cboModeSelector').val();
     var tags = $('#txtTags').val();
     var window = $('#cboWindowSelector').val();
-    $('#content-target').empty();
+    $('#content-target').html('');
     Player.clearTracks();
     loading();
     SoundBuzz.getBuzz(mode, tags, window, onTrackShow);
@@ -90,7 +90,7 @@ function unloading(){
 
 function show_nothing_found(){
     $('#player-control-play').find('.glyphicon').removeClass('glyphicon-pause').addClass('glyphicon-play');
-    $('#content-target').empty();
+    $('#content-target').html('');
     $( '<img />', { src   : 'img/badass.png',
                     alt   : 'not found',
                     class : 'placeholders' } ).appendTo('#content-target');
