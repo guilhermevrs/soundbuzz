@@ -14,7 +14,7 @@ function onTrackShow(evt){
         if ( track.artwork_url ) {
             $( '<img />', { src : track.artwork_url.replace('large','t200x200') } ).appendTo(miniatureContainer);
         }
-        $( '<span>', { 'data-trackindex': trackCount + i, class : 'play glyphicon glyphicon-play' } ).appendTo(miniatureContainer);
+        $( '<span>', { 'data-trackindex': trackCount + i, class : 'miniature-play play glyphicon glyphicon-play' } ).appendTo(miniatureContainer);
         $('#content-target').append(itemContainer);
     }
     if(evt.finish){
@@ -29,8 +29,13 @@ $( "#content-target" ).on( "click", ".play, .pause", function() {
     $this.toggleClass("play glyphicon-play pause glyphicon-pause");
     if(!Player.isPlaying)
         Player.play($this.data('trackindex'));
-    else
-        Player.pause();
+    else {
+        var myIndex = $(this).data('trackindex');
+        if(Player.currentIndex == myIndex)
+            Player.pause();
+        else
+            Player.play(myIndex);
+    }
 });
 
 $( '#player-control-play' ).click(function(){
@@ -58,9 +63,13 @@ function formSubmit(){
     return false;
 };
 
-Player.togglePlayCallback = function(isPlaying){
-    var span = $('#player-control-play').find('.glyphicon');
-    if((Player.isPlaying && span.hasClass('glyphicon-play')) ||
-      (!Player.isPlaying && span.hasClass('glyphicon-pause')))
-    span.toggleClass('glyphicon-play').toggleClass('glyphicon-pause');
+Player.togglePlayCallback = function(playerInfo){
+    var headerPlay = $('#player-control-play').find('.glyphicon');
+    var miniaturePlay = $('.miniature-play[data-trackindex='+playerInfo.trackIndex+']');
+    $('.miniature-play.pause').toggleClass('play glyphicon-play pause glyphicon-pause');
+    if((playerInfo.isPlaying && headerPlay.hasClass('glyphicon-play')) ||
+      (!playerInfo.isPlaying && headerPlay.hasClass('glyphicon-pause'))){
+        headerPlay.toggleClass('glyphicon-play glyphicon-pause');
+    }
+    miniaturePlay.toggleClass('play glyphicon-play pause glyphicon-pause');
 }
