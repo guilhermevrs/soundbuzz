@@ -48,7 +48,7 @@ $( "#content-target" ).on( "click", ".play, .pause", function() {
 $( '#player-control-play' ).click(function(){
     if(!Player.isPlaying){
         loading();
-        if(Player.play())
+        if(!Player.play())
             unloading();
     }
     else
@@ -57,13 +57,13 @@ $( '#player-control-play' ).click(function(){
 
 $( '#player-control-backward' ).click(function(){
     loading();
-    if(Player.backward())
+    if(!Player.backward())
         unloading();
 });
 
 $( '#player-control-forward' ).click(function(){
     loading();
-    if(Player.forward())
+    if(!Player.forward())
         unloading();
 });
 
