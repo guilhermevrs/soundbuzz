@@ -35,7 +35,7 @@ var Player = (function(){
     }
 
     me.play = function(index){
-        if(!index){
+        if(index === undefined){
             index = me.currentIndex;
         } else {
             if(me.currentIndex !== index)
@@ -46,6 +46,7 @@ var Player = (function(){
             var audioUrl = loadTracks[index].uri;
         } else {
             console.error('No loaded tracks');
+            return false;
         }
 
         if(!widget){
@@ -91,16 +92,18 @@ var Player = (function(){
         if((loadTracks.length - 1) > me.currentIndex){
             me.isPaused = false;
             me.currentIndex++;
-            me.play();
+            return me.play();
         }
+        return false;
     };
 
     me.backward = function(){
         if(me.currentIndex > 0){
             me.isPaused = false;
             me.currentIndex--;
-            me.play();
+            return me.play();
         }
+        return false;
     };
 
     me.pause = function(){

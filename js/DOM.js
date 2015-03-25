@@ -28,30 +28,43 @@ function onTrackShow(evt){
 $( "#content-target" ).on( "click", ".play, .pause", function() {
     var $this = $(this);
     $this.toggleClass("play glyphicon-play pause glyphicon-pause");
-    if(!Player.isPlaying)
-        Player.play($this.data('trackindex'));
+    if(!Player.isPlaying){
+        loading();
+        if(!Player.play($this.data('trackindex')))
+            unloading();
+    }
     else {
         var myIndex = $(this).data('trackindex');
         if(Player.currentIndex == myIndex)
             Player.pause();
-        else
-            Player.play(myIndex);
+        else{
+            loading();
+            if(!Player.play(myIndex))
+                unloading();
+        }
     }
 });
 
 $( '#player-control-play' ).click(function(){
-    if(!Player.isPlaying)
-        Player.play();
+    if(!Player.isPlaying){
+        loading();
+        if(Player.play())
+            unloading();
+    }
     else
         Player.pause();
 });
 
 $( '#player-control-backward' ).click(function(){
-    Player.backward();
+    loading();
+    if(Player.backward())
+        unloading();
 });
 
 $( '#player-control-forward' ).click(function(){
-    Player.forward();
+    loading();
+    if(Player.forward())
+        unloading();
 });
 
 function formSubmit(){
@@ -83,12 +96,16 @@ function show_nothing_found(){
                     alt   : 'not found',
                     class : 'placeholders' } ).appendTo('#content-target');
     $( '<p>', { class : 'badass',
-                text  : 'Watch out we got a badass over here' } ).appendTo('#content-target');
+                text  : 'Watch out, we got a badass over here' } ).appendTo('#content-target');
     $( '<p>', { class : 'nothing',
                 text  : 'Nothing matches your demands, your highness...'} ).appendTo('#content-target');
 }
 
 Player.togglePlayCallback = function(playerInfo){
+
+    if(playerInfo.isPlaying)
+        unloading();
+
     var headerPlay = $('#player-control-play').find('.glyphicon');
     var miniaturePlay = $('.miniature-play[data-trackindex='+playerInfo.trackIndex+']');
     $('.miniature-play.pause').toggleClass('play glyphicon-play pause glyphicon-pause');
