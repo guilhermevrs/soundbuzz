@@ -18,9 +18,10 @@ function onTrackShow(evt){
         $('#content-target').append(itemContainer);
     }
     if(evt.finish){
-        $('#overlay').removeClass('loading');
-        $('#loading').remove()
-        console.log('FINISHED');
+        unloading();
+        if (trackCount == 0){
+            show_nothing_found();
+        }
     }
 };
 
@@ -51,11 +52,34 @@ function formSubmit(){
     var mode = $('#cboModeSelector').val();
     var tags = $('#txtTags').val();
     var window = $('#cboWindowSelector').val();
+    $('#content-target').html('');
+    Player.clearTracks();
+    loading();
     SoundBuzz.getBuzz(mode, tags, window, onTrackShow);
-    $('#overlay').addClass('loading');
-    $('#overlay').append( $( '<div>', { id : 'loading' } ) );
     return false;
 };
+
+function loading(){
+    $('#overlay').addClass('loading');
+    $('#overlay').append( $( '<div>', { id : 'loading' } ) );
+};
+
+function unloading(){
+    $('#overlay').removeClass('loading');
+    $('#loading').remove();
+};
+
+
+function show_nothing_found(){
+    $('#content-target').html('');
+    $( '<img />', { src   : 'img/badass.png', 
+                    alt   : 'not found', 
+                    class : 'placeholders' } ).appendTo('#content-target');
+    $( '<p>', { class : 'badass', 
+                text  : 'Watch out we got a badass over here' } ).appendTo('#content-target');
+    $( '<p>', { class : 'nothing', 
+                text  : 'Nothing matches your demands, your highness...'} ).appendTo('#content-target');
+}
 
 Player.togglePlayCallback = function(isPlaying){
     var span = $('#player-control-play').find('.glyphicon');

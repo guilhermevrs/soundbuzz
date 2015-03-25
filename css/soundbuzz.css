@@ -283,3 +283,13 @@ body {
     background-color: rgba(90, 88, 87, 0.5);
     z-index:9999;
 }
+
+.badass {
+    color: #ff6600;
+    font-size: 3rem;
+}
+
+.nothing {
+    font-style: italic;
+    color: #908c8c; 
+}
