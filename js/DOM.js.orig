@@ -14,8 +14,8 @@ function onTrackShow(evt){
         if ( track.artwork_url ) {
             $( '<img />', { src : track.artwork_url.replace('large','t200x200') } ).appendTo(miniatureContainer);
         }
-        $( '<span>', { 'data-trackindex': trackCount + i, class : 'miniature-play play glyphicon glyphicon-play' }     ).appendTo(miniatureContainer);
-        itemContainer.appendTo('#content-target').hide().fadeIn(600);
+        $( '<span>', { 'data-trackindex': trackCount + i, class : 'miniature-play play glyphicon glyphicon-play' } ).appendTo(miniatureContainer);
+        $('#content-target').append(itemContainer);
     }
     if(evt.finish){
         unloading();
@@ -28,43 +28,30 @@ function onTrackShow(evt){
 $( "#content-target" ).on( "click", ".play, .pause", function() {
     var $this = $(this);
     $this.toggleClass("play glyphicon-play pause glyphicon-pause");
-    if(!Player.isPlaying){
-        loading();
-        if(!Player.play($this.data('trackindex')))
-            unloading();
-    }
+    if(!Player.isPlaying)
+        Player.play($this.data('trackindex'));
     else {
         var myIndex = $(this).data('trackindex');
         if(Player.currentIndex == myIndex)
             Player.pause();
-        else{
-            loading();
-            if(!Player.play(myIndex))
-                unloading();
-        }
+        else
+            Player.play(myIndex);
     }
 });
 
 $( '#player-control-play' ).click(function(){
-    if(!Player.isPlaying){
-        loading();
-        if(!Player.play())
-            unloading();
-    }
+    if(!Player.isPlaying)
+        Player.play();
     else
         Player.pause();
 });
 
 $( '#player-control-backward' ).click(function(){
-    loading();
-    if(!Player.backward())
-        unloading();
+    Player.backward();
 });
 
 $( '#player-control-forward' ).click(function(){
-    loading();
-    if(!Player.forward())
-        unloading();
+    Player.forward();
 });
 
 function formSubmit(){
@@ -83,28 +70,31 @@ function loading(){
     $('#overlay').append( $( '<div>', { id : 'loading' } ) );
 };
 
+<<<<<<< HEAD
 function unloading(){
     $('#overlay').removeClass('loading');
     $('#loading').remove();
 };
 
+
 function show_nothing_found(){
-    $('#player-control-play').find('.glyphicon').removeClass('glyphicon-pause').addClass('glyphicon-play');
     $('#content-target').html('');
-    $( '<img />', { src   : 'img/badass.png',
-                    alt   : 'not found',
+    $( '<img />', { src   : 'img/badass.png', 
+                    alt   : 'not found', 
                     class : 'placeholders' } ).appendTo('#content-target');
-    $( '<p>', { class : 'badass',
-                text  : 'Watch out, we got a badass over here' } ).appendTo('#content-target');
-    $( '<p>', { class : 'nothing',
+    $( '<p>', { class : 'badass', 
+                text  : 'Watch out we got a badass over here' } ).appendTo('#content-target');
+    $( '<p>', { class : 'nothing', 
                 text  : 'Nothing matches your demands, your highness...'} ).appendTo('#content-target');
 }
 
+Player.togglePlayCallback = function(isPlaying){
+    var span = $('#player-control-play').find('.glyphicon');
+    if((Player.isPlaying && span.hasClass('glyphicon-play')) ||
+      (!Player.isPlaying && span.hasClass('glyphicon-pause')))
+    span.toggleClass('glyphicon-play').toggleClass('glyphicon-pause');
+=======
 Player.togglePlayCallback = function(playerInfo){
-
-    if(playerInfo.isPlaying)
-        unloading();
-
     var headerPlay = $('#player-control-play').find('.glyphicon');
     var miniaturePlay = $('.miniature-play[data-trackindex='+playerInfo.trackIndex+']');
     $('.miniature-play.pause').toggleClass('play glyphicon-play pause glyphicon-pause');
@@ -113,4 +103,5 @@ Player.togglePlayCallback = function(playerInfo){
         headerPlay.toggleClass('glyphicon-play glyphicon-pause');
     }
     miniaturePlay.toggleClass('play glyphicon-play pause glyphicon-pause');
+>>>>>>> 3596257e77e1a6cc1631d7af0165bc4fa697b374
 }

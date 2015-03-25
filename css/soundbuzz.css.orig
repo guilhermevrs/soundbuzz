@@ -213,7 +213,7 @@ body {
   top: 0; left: 0; bottom: 0; right: 0;
 }
 
-.miniature:hover .play {
+.play:hover {
   opacity: 1;
 }
 
@@ -284,6 +284,7 @@ body {
     background-color: rgba(90, 88, 87, 0.5);
     z-index:9999;
 }
+<<<<<<< HEAD
 
 .badass {
     color: #ff6600;
@@ -294,3 +295,5 @@ body {
     font-style: italic;
     color: #908c8c; 
 }
+=======
+>>>>>>> 3596257e77e1a6cc1631d7af0165bc4fa697b374
