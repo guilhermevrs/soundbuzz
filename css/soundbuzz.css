@@ -191,6 +191,10 @@ body {
  * Miniature
  */
 
+.miniature {
+  height:100%; 
+}
+
 .miniature:hover {
   z-index: 0;
   opacity:0.9;
@@ -200,10 +204,12 @@ body {
   z-index: 9999;
   opacity: 0;
   color: #ff6600;
+  width: 50%;
+  height: 50%;
   font-size:80px;
-  left:37%;
-  top:30%;
-  position:absolute;
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
 }
 
 .play:hover {
@@ -213,10 +219,12 @@ body {
 .pause {
   z-index: 9999;
   color: #ff6600;
+  width: 40%;
+  height: 40%;
   font-size:80px;
-  left:37%;
-  top:30%;
-  position:absolute;
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
 }
 
 /*
@@ -253,4 +261,13 @@ body {
 .form-control:focus{
     border-color: #ff6600;
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(255, 102, 0, 0.6);
+}
+
+.loading {
+    background:url('../img/loading.gif') no-repeat center center;
+    height: 100px;
+    width: 100px;
+    margin:auto;
+    text-align:center;
+    z-index: 1000;
 }
