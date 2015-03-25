@@ -70,6 +70,7 @@ function loading(){
     $('#overlay').append( $( '<div>', { id : 'loading' } ) );
 };
 
+<<<<<<< HEAD
 function unloading(){
     $('#overlay').removeClass('loading');
     $('#loading').remove();
@@ -87,6 +88,12 @@ function show_nothing_found(){
                 text  : 'Nothing matches your demands, your highness...'} ).appendTo('#content-target');
 }
 
+Player.togglePlayCallback = function(isPlaying){
+    var span = $('#player-control-play').find('.glyphicon');
+    if((Player.isPlaying && span.hasClass('glyphicon-play')) ||
+      (!Player.isPlaying && span.hasClass('glyphicon-pause')))
+    span.toggleClass('glyphicon-play').toggleClass('glyphicon-pause');
+=======
 Player.togglePlayCallback = function(playerInfo){
     var headerPlay = $('#player-control-play').find('.glyphicon');
     var miniaturePlay = $('.miniature-play[data-trackindex='+playerInfo.trackIndex+']');
@@ -96,4 +103,5 @@ Player.togglePlayCallback = function(playerInfo){
         headerPlay.toggleClass('glyphicon-play glyphicon-pause');
     }
     miniaturePlay.toggleClass('play glyphicon-play pause glyphicon-pause');
+>>>>>>> 3596257e77e1a6cc1631d7af0165bc4fa697b374
 }

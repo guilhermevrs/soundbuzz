@@ -9,13 +9,13 @@ var Player = (function(){
     me.isPlaying = false;
     me.isPaused = false;
     me.togglePlayCallback;
+    me.currentIndex = 0;
 
     options = {};
     options.containerId = 'content-target';
 
     var contentContainer = document.getElementById(options.containerId);
     var widget;
-    var loadedIndex = 0;
     var loadTracks = [];
 
     function _prepareIframe(audioUrl){
@@ -36,9 +36,11 @@ var Player = (function(){
 
     me.play = function(index){
         if(!index){
-            index = loadedIndex;
+            index = me.currentIndex;
         } else {
-            me.isPaused = false;
+            if(me.currentIndex !== index)
+                me.isPaused = false;
+            me.currentIndex = index;
         }
         if(loadTracks.length > index){
             var audioUrl = loadTracks[index].uri;
@@ -79,17 +81,17 @@ var Player = (function(){
     };
 
     me.forward = function(){
-        if((loadTracks.length - 1) > loadedIndex){
+        if((loadTracks.length - 1) > me.currentIndex){
             me.isPaused = false;
-            loadedIndex++;
+            me.currentIndex++;
             me.play();
         }
     };
 
     me.backward = function(){
-        if(loadedIndex > 0){
+        if(me.currentIndex > 0){
             me.isPaused = false;
-            loadedIndex--;
+            me.currentIndex--;
             me.play();
         }
     };
@@ -98,8 +100,10 @@ var Player = (function(){
         widget.pause();
         me.isPlaying = false;
         me.isPaused = true;
-        if(me.togglePlayCallback)
-            asyncCall(me.togglePlayCallback, false);
+        if(me.togglePlayCallback){
+            var playerInfo = {isPlaying : false};
+            asyncCall(me.togglePlayCallback, playerInfo);
+        }
     };
 
     me.getTrackCount = function(){
@@ -110,8 +114,13 @@ var Player = (function(){
         var titleDisplay = document.getElementById('player-current-title');
         titleDisplay.textContent = sound.user.username + ' - ' + sound.title;
         me.isPlaying = true;
-        if(me.togglePlayCallback)
-            asyncCall(me.togglePlayCallback, true);
+        if(me.togglePlayCallback){
+            var playerInfo = {
+                isPlaying : true,
+                trackIndex : me.currentIndex
+            };
+            asyncCall(me.togglePlayCallback, playerInfo);
+        }
     };
 
     function _onFinish(){
