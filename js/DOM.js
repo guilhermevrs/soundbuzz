@@ -14,8 +14,8 @@ function onTrackShow(evt){
         if ( track.artwork_url ) {
             $( '<img />', { src : track.artwork_url.replace('large','t200x200') } ).appendTo(miniatureContainer);
         }
-        $( '<span>', { 'data-trackindex': trackCount + i, class : 'miniature-play play glyphicon glyphicon-play' } ).appendTo(miniatureContainer);
-        $('#content-target').append(itemContainer);
+        $( '<span>', { 'data-trackindex': trackCount + i, class : 'miniature-play play glyphicon glyphicon-play' }     ).appendTo(miniatureContainer);
+        itemContainer.appendTo('#content-target').hide().fadeIn(600);   
     }
     if(evt.finish){
         unloading();
