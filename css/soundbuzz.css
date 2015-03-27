@@ -205,7 +205,7 @@ body {
   z-index: 9999;
   opacity: 0;
   color: #ff6600;
-  width: 40%;
+  width: 30%;
   height: 40%;
   font-size:80px;
   margin: auto;
@@ -220,7 +220,7 @@ body {
 .pause {
   z-index: 9999;
   color: #ff6600;
-  width: 40%;
+  width: 30%;
   height: 40%;
   font-size:80px;
   margin: auto;
