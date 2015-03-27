@@ -95,8 +95,10 @@
     background: #ff6600;
 }
 .irs-grid-text {
-    color: #ff6600;
+    color: #727272;
 }
 
 .irs-disabled {
 }
+
+.irs-grid-pol.small {visibility: hidden;}
