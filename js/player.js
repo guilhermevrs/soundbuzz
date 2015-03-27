@@ -16,6 +16,7 @@ var Player = (function(){
 
     var contentContainer = document.getElementById(options.containerId);
     var widget;
+    var currentSound;
     var loadTracks = [];
 
     function _prepareIframe(audioUrl){
@@ -35,41 +36,39 @@ var Player = (function(){
     }
 
     me.play = function(index){
-        if(index === undefined){
+        if(index === undefined){ //Coming from header player
             index = me.currentIndex;
         } else {
-            if(me.currentIndex !== index)
-                me.isPaused = false;
+            //comming from miniatures
+            if(me.currentIndex !== index){
+                if(currentSound)
+                    currentSound.stop();
+                me.isPaused = false; //New music called
+            }
             me.currentIndex = index;
         }
         if(loadTracks.length > index){
-            var audioUrl = loadTracks[index].uri;
+            var audioID = loadTracks[index].id;
         } else {
             console.error('No loaded tracks');
             return false;
         }
 
-        if(!widget){
-            var iframe = _prepareIframe(audioUrl);
-            widget = SC.Widget(iframe);
-            widget.bind(SC.Widget.Events.READY, function() {
-                widget.bind(SC.Widget.Events.PLAY, function(evt){
-                    widget.getCurrentSound(_onPlay);
-                });
-                widget.bind(SC.Widget.Events.FINISH, function(evt){
-                    _onFinish();
-                });
-            });
+        if(me.isPaused){
+            me.isPaused = false;
+            currentSound.play();
+            _onPlay(loadTracks[me.currentIndex]);
         } else {
-            if(!me.isPaused){
-                widget.load(audioUrl, {
-                    auto_play: true
-                });
-            } else {
-                me.isPaused = false;
-                widget.play();
-            }
+            //New sound
+            SC.stream('/tracks/' + audioID, function(sound){
+                console.log(sound);
+                currentSound = sound;
+                me.isPaused = true;
+                me.currentIndex = index;
+                me.play();
+            });
         }
+
         return true;
     };
 
@@ -92,6 +91,7 @@ var Player = (function(){
         if((loadTracks.length - 1) > me.currentIndex){
             me.isPaused = false;
             me.currentIndex++;
+            currentSound.stop();
             return me.play();
         }
         return false;
@@ -100,6 +100,7 @@ var Player = (function(){
     me.backward = function(){
         if(me.currentIndex > 0){
             me.isPaused = false;
+            currentSound.stop();
             me.currentIndex--;
             return me.play();
         }
@@ -107,7 +108,7 @@ var Player = (function(){
     };
 
     me.pause = function(){
-        widget.pause();
+        currentSound.pause();
         me.isPlaying = false;
         me.isPaused = true;
         if(me.togglePlayCallback){
