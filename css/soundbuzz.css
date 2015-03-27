@@ -265,7 +265,7 @@ body {
 }
 
 #loading {
-    background:url('../img/loading.gif') no-repeat center center;
+    background:url('../img/loading.svg') no-repeat center center;
     height: 100%;
     width: 100%;
     margin:auto;
