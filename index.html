@@ -12,6 +12,8 @@
     <!-- CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-tagsinput.css" rel="stylesheet">
+    <link href="css/ion.rangeSlider.css" rel="stylesheet">
+    <link href="css/ion.rangeSlider.skinNice.css" rel="stylesheet"> 
     <link href="css/soundbuzz.css" rel="stylesheet">
   </head>
 
@@ -49,7 +51,6 @@
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Help</a></li>
             <li><a href="#">About</a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -60,39 +61,28 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
         <form role="form" onsubmit="return formSubmit()">
-          <ul class="nav nav-sidebar">
+          <ul class="nav nav-sidebar placeholders">
             <li>
-                <label for="type"><p class="text-muted text-center">Choose a trend</p></label>
                 <div class="form-group">
-                    <select id="cboModeSelector" class="form-control">
-                      <option value="buzzy">Buzzy</option>
-                      <option value="trendy">Trendy</option>
-                      <option value="groovy">Groovy</option>
-                    </select>
+                    <input type="text" id="cboModeSelector" class="form-control" value="" />
                 </div>
             </li>
           </ul>
-          <ul class="nav nav-sidebar">
+          <ul class="nav nav-sidebar placeholders">
             <li>
-                <label for="period"><p class="text-muted text-center">Choose a time</p></label>
                 <div class="form-group">
-                    <select id="cboWindowSelector" class="form-control">
-                      <option value="1week">Last week</option>
-                      <option value="2weeks">Last 2 weeks</option>
-                      <option value="month">Last month</option>
-                    </select>
+                    <input type="text" id="cboWindowSelector" class="form-control" value="" />
                 </div>
             </li>
           </ul>
-          <ul class="nav nav-sidebar">
-            <li>
-              <label for="tags"><p class="text-muted text-center">Choose tags</p></label>
-              <input type="text" id="txtTags" class="form-control" value="" data-role="tagsinput"/>
+          <ul class="nav nav-sidebar placeholders">
+            <li class="tags-container">
+              <input type="text" id="txtTags" class="form-control" placeholder="Choose tags" value="" data-role="tagsinput"/>
             </li>
           </ul>
-          <ul class="nav nav-sidebar">
+          <ul class="nav nav-sidebar placeholders">
             <li>
-              <input class="btn btn-default" type="submit" value="Submit">
+              <input class="btn btn-default" type="submit" value="Get me some dope!">
             </li>
           </ul>
         </form>
@@ -100,7 +90,6 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <div id="content-target" class="row placeholders">
           </div>
-          <div id="iframe-container"></div>
         </div>
          <div id="overlay">
         </div>
@@ -112,8 +101,8 @@
     <script src="js/jquery-1.11.2.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap-tagsinput.min.js"></script>
+    <script src="js/ion.rangeSlider.min.js"></script>
     <script src="http://connect.soundcloud.com/sdk.js"></script>
-    <script src="https://w.soundcloud.com/player/api.js"></script>
     <script src="js/Soundbuzz.js"></script>
     <script src="js/player.js"></script>
     <script src="js/DOM.js"></script>

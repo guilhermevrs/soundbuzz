@@ -2,6 +2,24 @@
 DOM.js
 author: morgl
 */
+$( document ).ready(function() {
+    $("#cboModeSelector").ionRangeSlider({
+        grid: true,
+        hide_min_max: true,
+        from: 3,
+        values: ["Groovy", "Trendy", "Buzzy"]
+    });
+    $("#cboWindowSelector").ionRangeSlider({
+        grid: true,
+        hide_min_max: true,
+        from: 3,
+        values: ["Last week", "Last 2 weeks", "Last month"]
+    });
+});
+
+$('.tags-container').on('focus', 'input', function(){
+    $(this).removeAttr('placeholder');
+});
 
 function onTrackShow(evt){
     var trackCount = Player.getTrackCount();
@@ -102,12 +120,19 @@ function show_nothing_found(){
 
 Player.togglePlayCallback = function(playerInfo){
 
+    if(playerInfo.sound){
+        var sound = playerInfo.sound;
+        var titleDisplay = document.getElementById('player-current-title');
+        titleDisplay.textContent = sound.user.username + ' - ' + sound.title;
+    }
+
     if(playerInfo.isPlaying)
         unloading();
 
     var headerPlay = $('#player-control-play').find('.glyphicon');
     var miniaturePlay = $('.miniature-play[data-trackindex='+playerInfo.trackIndex+']');
     $('.miniature-play.pause').toggleClass('play glyphicon-play pause glyphicon-pause');
+
     if((playerInfo.isPlaying && headerPlay.hasClass('glyphicon-play')) ||
       (!playerInfo.isPlaying && headerPlay.hasClass('glyphicon-pause'))){
         headerPlay.toggleClass('glyphicon-play glyphicon-pause');
