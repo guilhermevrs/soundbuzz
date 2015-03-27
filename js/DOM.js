@@ -17,6 +17,10 @@ $( document ).ready(function() {
     });
 });
 
+$('.tags-container').on('focus', 'input', function(){
+    $(this).removeAttr('placeholder');
+});
+
 function onTrackShow(evt){
     var trackCount = Player.getTrackCount();
     Player.addTracks(evt.tracks);
