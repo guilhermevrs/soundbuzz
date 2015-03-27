@@ -12,6 +12,8 @@
     <!-- CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-tagsinput.css" rel="stylesheet">
+    <link href="css/ion.rangeSlider.css" rel="stylesheet">
+    <link href="css/ion.rangeSlider.skinNice.css" rel="stylesheet"> 
     <link href="css/soundbuzz.css" rel="stylesheet">
   </head>
 
@@ -64,11 +66,7 @@
             <li>
                 <label for="type"><p class="text-muted text-center">Choose a trend</p></label>
                 <div class="form-group">
-                    <select id="cboModeSelector" class="form-control">
-                      <option value="buzzy">Buzzy</option>
-                      <option value="trendy">Trendy</option>
-                      <option value="groovy">Groovy</option>
-                    </select>
+                    <input type="text" id="cboModeSelector" class="form-control" value="" />
                 </div>
             </li>
           </ul>
@@ -76,11 +74,7 @@
             <li>
                 <label for="period"><p class="text-muted text-center">Choose a time</p></label>
                 <div class="form-group">
-                    <select id="cboWindowSelector" class="form-control">
-                      <option value="1week">Last week</option>
-                      <option value="2weeks">Last 2 weeks</option>
-                      <option value="month">Last month</option>
-                    </select>
+                    <input type="text" id="cboWindowSelector" class="form-control" value="" />
                 </div>
             </li>
           </ul>
@@ -112,6 +106,7 @@
     <script src="js/jquery-1.11.2.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap-tagsinput.min.js"></script>
+    <script src="js/ion.rangeSlider.min.js"></script>
     <script src="http://connect.soundcloud.com/sdk.js"></script>
     <script src="https://w.soundcloud.com/player/api.js"></script>
     <script src="js/Soundbuzz.js"></script>

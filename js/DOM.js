@@ -2,6 +2,20 @@
 DOM.js
 author: morgl
 */
+$( document ).ready(function() {
+    $("#cboModeSelector").ionRangeSlider({
+        grid: true,
+        hide_min_max: true,
+        from: 3,
+        values: ["Groovy", "Trendy", "Buzzy"]
+    });
+    $("#cboWindowSelector").ionRangeSlider({
+        grid: true,
+        hide_min_max: true,
+        from: 3,
+        values: ["Last week", "Last 2 weeks", "Last month"]
+    });
+});
 
 function onTrackShow(evt){
     var trackCount = Player.getTrackCount();
