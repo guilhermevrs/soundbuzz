@@ -2,6 +2,7 @@
 DOM.js
 author: morgl
 */
+
 $( document ).ready(function() {
     $("#cboModeSelector").ionRangeSlider({
         grid: true,
@@ -86,15 +87,15 @@ $( '#player-control-forward' ).click(function(){
         unloading();
 });
 
-<<<<<<< HEAD
+
 $( "#content-target" ).on( "click", ".close", function() {
     trackIndex = $(this).attr("data-trackindex")
     console.log( closestSpan );
-=======
+});
+    
 $( '#player-control-random' ).click(function(){
     var $this = $(this).toggleClass('btn-active');
     Player.isRandom = !Player.isRandom;
->>>>>>> e4360a20b25170a5f4ed194b2f8a80dc2a973f81
 });
 
 function formSubmit(){
