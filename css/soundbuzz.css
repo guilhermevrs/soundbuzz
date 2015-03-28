@@ -240,6 +240,10 @@ body {
     height: 20px;
 }
 
+#player-current-title a{
+    white-space: nowrap;
+}
+
 .label-info {
   background-color: #ff6600;
 }

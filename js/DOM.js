@@ -2,6 +2,10 @@
 DOM.js
 author: morgl
 */
+
+var scrollingInterval;
+var scrollOverflow = 0;
+
 $( document ).ready(function() {
     $("#cboModeSelector").ionRangeSlider({
         grid: true,
@@ -125,11 +129,26 @@ function show_nothing_found(){
 }
 
 function clearTitleDisplay(){
+    clearInterval(scrollingInterval);
     var titleDisplay = document.getElementById('player-current-title');
     while(titleDisplay.firstChild){
         titleDisplay.removeChild(titleDisplay.firstChild);
     }
     return titleDisplay;
+}
+
+function scrollTitleDisplay(element, step){
+    var titleDisplay = element;
+    var scrollPos = titleDisplay.scrollWidth - titleDisplay.offsetWidth;
+    if(titleDisplay.scrollLeft >= scrollPos){
+        scrollOverflow++;
+        if(scrollOverflow == 6){
+            titleDisplay.scrollLeft = 0;
+            scrollOverflow = 0;
+        }
+    } else {
+        titleDisplay.scrollLeft += step;
+    }
 }
 
 Player.togglePlayCallback = function(playerInfo){
@@ -143,6 +162,11 @@ Player.togglePlayCallback = function(playerInfo){
         trackLink.textContent = (sound.user.username + ' - ' + sound.title);
         titleDisplay.appendChild(trackLink);
         document.title = titleDisplay.textContent;
+        if(titleDisplay.scrollWidth > titleDisplay.offsetWidth){
+            scrollingInterval = setInterval(function(){
+                scrollTitleDisplay(titleDisplay, 5);
+            }, 500);
+        }
     }
 
     if(playerInfo.isPlaying)
