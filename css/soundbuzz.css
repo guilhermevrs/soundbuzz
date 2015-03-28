@@ -231,8 +231,10 @@ body {
  */
 
 
-#player-iframe {
-  display: none;
+#player-current-title {
+    overflow: hidden;
+    width: 500px;
+    height: 20px;
 }
 
 .label-info {
@@ -250,7 +252,7 @@ body {
     outline: none;
 }
 
-.btn-default:hover, .btn-default:active {
+.btn-default:hover, .btn-default:active, .btn-default.btn-active {
     color: #fff;
     background-color: #db5e0b;
     border-color:transparent;
