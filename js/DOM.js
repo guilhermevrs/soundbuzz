@@ -89,7 +89,7 @@ $( '#player-control-forward' ).click(function(){
 
 
 $( "#content-target" ).on( "click", ".close", function() {
-    trackIndex = $(this).attr("data-trackindex")
+    trackIndex = $(this).attr("data-trackindex");
     console.log( trackIndex );
 });
     
