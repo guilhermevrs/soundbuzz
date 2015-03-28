@@ -90,7 +90,7 @@ $( '#player-control-forward' ).click(function(){
 
 $( "#content-target" ).on( "click", ".close", function() {
     trackIndex = $(this).attr("data-trackindex")
-    console.log( closestSpan );
+    console.log( trackIndex );
 });
     
 $( '#player-control-random' ).click(function(){
