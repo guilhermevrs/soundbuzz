@@ -132,6 +132,9 @@ Player.togglePlayCallback = function(playerInfo){
         trackLink.setAttribute('href', sound.permalink_url);
         trackLink.setAttribute('target', '_blank');
         trackLink.textContent = (sound.user.username + ' - ' + sound.title);
+        while(titleDisplay.firstChild){
+            titleDisplay.removeChild(titleDisplay.firstChild);
+        }
         titleDisplay.appendChild(trackLink);
         document.title = titleDisplay.textContent;
     }

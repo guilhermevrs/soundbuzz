@@ -234,8 +234,10 @@ body {
  */
 
 
-#player-iframe {
-  display: none;
+#player-current-title {
+    overflow: hidden;
+    width: 500px;
+    height: 20px;
 }
 
 .label-info {
