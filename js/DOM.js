@@ -33,6 +33,7 @@ function onTrackShow(evt){
             $( '<img />', { src : track.artwork_url.replace('large','t200x200') } ).appendTo(miniatureContainer);
         }
         $( '<span>', { 'data-trackindex': trackCount + i, class : 'miniature-play play glyphicon glyphicon-play' }     ).appendTo(miniatureContainer);
+        $( '<button>', { class : 'close', text : 'x', 'data-trackindex': trackCount + i } ).appendTo(miniatureContainer);
         itemContainer.appendTo('#content-target').hide().fadeIn(600);
     }
     if(evt.finish){
@@ -83,6 +84,11 @@ $( '#player-control-forward' ).click(function(){
     loading();
     if(!Player.forward())
         unloading();
+});
+
+$( "#content-target" ).on( "click", ".close", function() {
+    trackIndex = $(this).attr("data-trackindex")
+    console.log( closestSpan );
 });
 
 function formSubmit(){
