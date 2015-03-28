@@ -71,7 +71,8 @@ var Player = (function(){
                 me.currentIndex = getRandomInt(0, loadTracks.length - 1);
             else
                 me.currentIndex++;
-            currentSound.stop();
+            if(currentSound)
+                currentSound.stop();
             return me.play();
         }
         return false;
@@ -80,7 +81,8 @@ var Player = (function(){
     me.backward = function(){
         if(me.currentIndex > 0){
             me.isPaused = false;
-            currentSound.stop();
+            if(currentSound)
+                currentSound.stop();
             if(me.isRandom)
                 me.currentIndex = getRandomInt(0, loadTracks.length - 1);
             else
@@ -91,7 +93,8 @@ var Player = (function(){
     };
 
     me.pause = function(){
-        currentSound.pause();
+        if(currentSound)
+            currentSound.pause();
         me.isPlaying = false;
         me.isPaused = true;
         if(me.togglePlayCallback){
