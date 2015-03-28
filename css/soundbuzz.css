@@ -193,7 +193,7 @@ body {
  */
 
 .miniature {
-  height:100%;
+  height:100%;  
 }
 
 .miniature:hover {
@@ -202,31 +202,28 @@ body {
   cursor: pointer;
 }
 
-.play {
+.miniature img{
+  border-radius: 10px;
+  width:100%;
+  max-width: 200px;
+}
+
+.play, .pause {
   z-index: 9999;
   opacity: 0;
   color: #ff6600;
-  width: 30%;
-  height: 40%;
   font-size:80px;
   margin: auto;
   position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
+  top: 30%; left: 0; bottom: 0; right: 0;
 }
 
 .miniature:hover .play {
   opacity: 1;
 }
 
-.pause {
-  z-index: 9999;
-  color: #ff6600;
-  width: 30%;
-  height: 40%;
-  font-size:80px;
-  margin: auto;
+.miniature .close {
   position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
 }
 
 /*
@@ -300,4 +297,8 @@ body {
 .nothing {
     font-style: italic;
     color: #908c8c;
+}
+
+.btn:focus, .btn:active:focus, .btn.active:focus, .close:focus, .close:active:focus, .btn.close:focus{
+    outline: 0 none;
 }
