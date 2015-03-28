@@ -7,7 +7,7 @@ $( document ).ready(function() {
         grid: true,
         hide_min_max: true,
         from: 3,
-        values: ["Groovy", "Trendy", "Buzzy"]
+        values: ["Buzzy", "Trendy", "Groovy"]
     });
     $("#cboWindowSelector").ionRangeSlider({
         grid: true,
@@ -123,7 +123,12 @@ Player.togglePlayCallback = function(playerInfo){
     if(playerInfo.sound){
         var sound = playerInfo.sound;
         var titleDisplay = document.getElementById('player-current-title');
-        titleDisplay.textContent = sound.user.username + ' - ' + sound.title;
+        trackLink = document.createElement('a');
+        trackLink.setAttribute('href', sound.permalink_url);
+        trackLink.setAttribute('target', '_blank');
+        trackLink.textContent = (sound.user.username + ' - ' + sound.title);
+        titleDisplay.appendChild(trackLink);
+        document.title = titleDisplay.textContent;
     }
 
     if(playerInfo.isPlaying)

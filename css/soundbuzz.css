@@ -3,7 +3,8 @@
  */
 
 a, a:hover, a:focus, a:active {
-    color: #908c8c;
+    color: #ffffff;
+    text-decoration: none;
 }
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
