@@ -208,7 +208,7 @@ body {
   max-width: 200px;
 }
 
-.play, .pause {
+.play {
   z-index: 9999;
   opacity: 0;
   color: #ff6600;
@@ -217,6 +217,17 @@ body {
   position: absolute;
   top: 30%; left: 0; bottom: 0; right: 0;
 }
+
+.pause {
+  z-index: 9999;
+  opacity: 1;
+  color: #ff6600;
+  font-size:80px;
+  margin: auto;
+  position: absolute;
+  top: 30%; left: 0; bottom: 0; right: 0;
+}
+
 
 .miniature:hover .play {
   opacity: 1;
