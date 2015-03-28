@@ -84,7 +84,7 @@ var Player = (function(){
             me.isPlaying = false;
             widget.pause();
             var titleDisplay = document.getElementById('player-current-title');
-        titleDisplay.textContent = '';
+            titleDisplay.textContent = '';
         }
     };
 
@@ -122,7 +122,12 @@ var Player = (function(){
 
     function _onPlay(sound){
         var titleDisplay = document.getElementById('player-current-title');
-        titleDisplay.textContent = sound.user.username + ' - ' + sound.title;
+        trackLink = document.createElement('a');
+        trackLink.setAttribute('href', sound.permalink_url);
+        trackLink.setAttribute('target', '_blank');
+        trackLink.textContent = (sound.user.username + ' - ' + sound.title);
+        titleDisplay.appendChild(trackLink);
+        document.title = titleDisplay.textContent;
         me.isPlaying = true;
         if(me.togglePlayCallback){
             var playerInfo = {

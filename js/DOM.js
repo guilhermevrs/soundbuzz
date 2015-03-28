@@ -7,7 +7,7 @@ $( document ).ready(function() {
         grid: true,
         hide_min_max: true,
         from: 3,
-        values: ["Groovy", "Trendy", "Buzzy"]
+        values: ["Buzzy", "Trendy", "Groovy"]
     });
     $("#cboWindowSelector").ionRangeSlider({
         grid: true,
