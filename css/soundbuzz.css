@@ -253,7 +253,7 @@ body {
     outline: none;
 }
 
-.btn-default:hover, .btn-default:active {
+.btn-default:hover, .btn-default:active, .btn-default.btn-active {
     color: #fff;
     background-color: #db5e0b;
     border-color:transparent;

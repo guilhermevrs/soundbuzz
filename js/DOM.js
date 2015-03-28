@@ -85,6 +85,11 @@ $( '#player-control-forward' ).click(function(){
         unloading();
 });
 
+$( '#player-control-random' ).click(function(){
+    var $this = $(this).toggleClass('btn-active');
+    Player.isRandom = !Player.isRandom;
+});
+
 function formSubmit(){
     var mode = $('#cboModeSelector').val();
     var tags = $('#txtTags').val();

@@ -10,6 +10,7 @@ var Player = (function(){
     me.isPaused = false;
     me.togglePlayCallback;
     me.currentIndex = 0;
+    me.isRandom = false;
 
     var currentSound;
     var loadTracks = [];
@@ -66,7 +67,10 @@ var Player = (function(){
     me.forward = function(){
         if((loadTracks.length - 1) > me.currentIndex){
             me.isPaused = false;
-            me.currentIndex++;
+            if(me.isRandom)
+                me.currentIndex = getRandomInt(0, loadTracks.length - 1);
+            else
+                me.currentIndex++;
             currentSound.stop();
             return me.play();
         }
@@ -77,7 +81,10 @@ var Player = (function(){
         if(me.currentIndex > 0){
             me.isPaused = false;
             currentSound.stop();
-            me.currentIndex--;
+            if(me.isRandom)
+                me.currentIndex = getRandomInt(0, loadTracks.length - 1);
+            else
+                me.currentIndex--;
             return me.play();
         }
         return false;
@@ -121,6 +128,10 @@ var Player = (function(){
 
     function asyncCall(fn, params){
         setTimeout(function(){fn(params)},0);
+    }
+
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
     return me;
