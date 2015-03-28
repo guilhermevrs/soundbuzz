@@ -85,7 +85,7 @@ var Player = (function(){
             widget.pause();
             var titleDisplay = document.getElementById('player-current-title');
             titleDisplay.textContent = '';
-            document.title = 'Soundblast';
+            document.title = 'SoundBlast';
         }
     };
 
