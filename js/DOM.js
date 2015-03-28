@@ -91,6 +91,7 @@ $( '#player-control-random' ).click(function(){
 });
 
 function formSubmit(){
+    clearTitleDisplay();
     var mode = $('#cboModeSelector').val();
     var tags = $('#txtTags').val();
     var window = $('#cboWindowSelector').val();
@@ -123,18 +124,23 @@ function show_nothing_found(){
                 text  : 'Nothing matches your demands, your highness...'} ).appendTo('#content-target');
 }
 
+function clearTitleDisplay(){
+    var titleDisplay = document.getElementById('player-current-title');
+    while(titleDisplay.firstChild){
+        titleDisplay.removeChild(titleDisplay.firstChild);
+    }
+    return titleDisplay;
+}
+
 Player.togglePlayCallback = function(playerInfo){
 
     if(playerInfo.sound){
         var sound = playerInfo.sound;
-        var titleDisplay = document.getElementById('player-current-title');
+        var titleDisplay = clearTitleDisplay();
         trackLink = document.createElement('a');
         trackLink.setAttribute('href', sound.permalink_url);
         trackLink.setAttribute('target', '_blank');
         trackLink.textContent = (sound.user.username + ' - ' + sound.title);
-        while(titleDisplay.firstChild){
-            titleDisplay.removeChild(titleDisplay.firstChild);
-        }
         titleDisplay.appendChild(trackLink);
         document.title = titleDisplay.textContent;
     }
