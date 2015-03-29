@@ -37,7 +37,7 @@ function onTrackShow(evt){
             $( '<img />', { src : track.artwork_url.replace('large','t200x200') } ).appendTo(miniatureContainer);
         }
         $( '<span>', { 'data-trackindex': trackCount + i, class : 'miniature-play play glyphicon glyphicon-play' }     ).appendTo(miniatureContainer);
-        $( '<button>', { class : 'close', text : 'x', 'data-trackindex': trackCount + i } ).appendTo(miniatureContainer);
+        $( '<button>', { class : 'close', text : 'x' } ).appendTo(miniatureContainer);
         itemContainer.appendTo('#content-target').hide().fadeIn(600);
     }
     if(evt.finish){
@@ -90,10 +90,20 @@ $( '#player-control-forward' ).click(function(){
         unloading();
 });
 
-
 $( "#content-target" ).on( "click", ".close", function() {
-    trackIndex = $(this).attr("data-trackindex");
-    console.log( trackIndex );
+    trackIndex = $(this).siblings("span").data("trackindex");
+    var miniatures = $(".miniature-play");
+    for (var i = miniatures.length - 1; i >= 0; i--){
+        var currentMiniature = $(miniatures[i]);
+        var currentTrackIndex = currentMiniature.data("trackindex");
+        if ( currentTrackIndex > trackIndex ){
+            currentMiniature.attr("data-trackindex", (--currentTrackIndex).toString());
+        }
+        else{
+            break;
+        }
+    }
+    
 });
     
 $( '#player-control-random' ).click(function(){
