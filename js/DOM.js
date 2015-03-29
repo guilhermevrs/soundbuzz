@@ -91,19 +91,24 @@ $( '#player-control-forward' ).click(function(){
 });
 
 $( "#content-target" ).on( "click", ".close", function() {
-    trackIndex = $(this).siblings("span").data("trackindex");
+    var $this = $(this);
+    trackIndex = $this.siblings("span").data("trackindex");
     var miniatures = $(".miniature-play");
     for (var i = miniatures.length - 1; i >= 0; i--){
         var currentMiniature = $(miniatures[i]);
         var currentTrackIndex = currentMiniature.data("trackindex");
         if ( currentTrackIndex > trackIndex ){
             currentMiniature.attr("data-trackindex", (--currentTrackIndex).toString());
+            currentMiniature.data('trackindex', currentTrackIndex);
         }
         else{
             break;
         }
     }
-    
+    Player.removeTrack(trackIndex);
+    $this.parent().parent().fadeOut(600, function(){
+        $this.remove();
+    });
 });
     
 $( '#player-control-random' ).click(function(){

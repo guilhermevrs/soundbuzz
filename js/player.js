@@ -54,6 +54,11 @@ var Player = (function(){
     me.addTracks = function(tracks){
         loadTracks = loadTracks.concat(tracks);
     };
+    
+    me.removeTrack = function(trackindex){
+        if(loadTracks.length > trackindex)
+            loadTracks.splice(trackindex, 1);
+    };
 
     me.clearTracks = function(){
         loadTracks = [];
