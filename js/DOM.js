@@ -204,3 +204,12 @@ Player.togglePlayCallback = function(playerInfo){
     }
     miniaturePlay.toggleClass('play glyphicon-play pause glyphicon-pause');
 }
+
+function welcome(username, permalink){
+    if (! ($('.welcome').length) ){
+        var textContainer = $( "<ul>", { class: "nav nav-sidebar welcome placeholders"} );
+        var userLink = "<a href='https://www.soundcloud.com/" + permalink + "'>" + username + "</a>" 
+        textContainer.append("<li class='text-muted'>Welcome, " + userLink +" !</li>");
+        $('#form').prepend(textContainer);
+    }
+}

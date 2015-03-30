@@ -168,11 +168,22 @@ var SoundBuzz = (function(){
 })();
 
 SC.initialize({
-  client_id: '581b5c41bbf8308284bfa16743d9c86d'
+  client_id: '581b5c41bbf8308284bfa16743d9c86d',
+  redirect_uri: 'http://localhost/soundbuzz/callback.html'   
 });
+
+$( '.connect' ).click(function(){
+    client_conn = SC.connect(function() {
+      SC.get('/me', function(me) { 
+        welcome(me.username, me.permalink);
+      });
+      //SC.put('/me/favorites/84491202');    
+    }); 
+});
+
 
 /*SC.get('/playlists/19351492', function(playlist) {
   for (var i = 0; i < playlist.tracks.length; i++) {
     console.log(playlist.tracks[i]);
   }
-});*/
+});*/   

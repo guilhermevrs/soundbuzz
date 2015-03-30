@@ -257,7 +257,7 @@ body {
 }
 
 .play {
-  z-index: 9999;
+  z-index: 999;
   opacity: 0;
   color: #ff6600;
   font-size:80px;
@@ -267,7 +267,7 @@ body {
 }
 
 .pause {
-  z-index: 9999;
+  z-index: 999;
   opacity: 1;
   color: #ff6600;
   font-size:80px;
@@ -359,6 +359,22 @@ body {
 
 .btn:focus, .btn:active:focus, .btn.active:focus, .close:focus, .close:active:focus, .btn.close:focus{
     outline: 0 none;
+}
+
+.connect{
+    cursor: pointer;
+}
+
+.welcome > li > a {
+   position: relative; 
+   display: inline;
+   padding: 0; 
+   color: #ff6600;    
+}
+
+.welcome > li > a:hover{
+    background-color:transparent;
+    color: #ff6600; 
 }
 
 /*
