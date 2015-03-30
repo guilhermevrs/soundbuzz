@@ -2,12 +2,16 @@
 DOM.js
 author: morgl
 */
+
+var scrollingInterval;
+var scrollOverflow = 0;
+
 $( document ).ready(function() {
     $("#cboModeSelector").ionRangeSlider({
         grid: true,
         hide_min_max: true,
         from: 3,
-        values: ["Groovy", "Trendy", "Buzzy"]
+        values: ["Buzzy", "Trendy", "Groovy"]
     });
     $("#cboWindowSelector").ionRangeSlider({
         grid: true,
@@ -33,6 +37,7 @@ function onTrackShow(evt){
             $( '<img />', { src : track.artwork_url.replace('large','t200x200') } ).appendTo(miniatureContainer);
         }
         $( '<span>', { 'data-trackindex': trackCount + i, class : 'miniature-play play glyphicon glyphicon-play' }     ).appendTo(miniatureContainer);
+        $( '<button>', { class : 'close', text : 'x' } ).appendTo(miniatureContainer);
         itemContainer.appendTo('#content-target').hide().fadeIn(600);
     }
     if(evt.finish){
@@ -85,7 +90,34 @@ $( '#player-control-forward' ).click(function(){
         unloading();
 });
 
+$( "#content-target" ).on( "click", ".close", function() {
+    var $this = $(this);
+    trackIndex = $this.siblings("span").data("trackindex");
+    var miniatures = $(".miniature-play");
+    for (var i = miniatures.length - 1; i >= 0; i--){
+        var currentMiniature = $(miniatures[i]);
+        var currentTrackIndex = currentMiniature.data("trackindex");
+        if ( currentTrackIndex > trackIndex ){
+            currentMiniature.attr("data-trackindex", (--currentTrackIndex).toString());
+            currentMiniature.data('trackindex', currentTrackIndex);
+        }
+        else{
+            break;
+        }
+    }
+    Player.removeTrack(trackIndex);
+    $this.parent().parent().fadeOut(600, function(){
+        $this.remove();
+    });
+});
+    
+$( '#player-control-random' ).click(function(){
+    var $this = $(this).toggleClass('btn-active');
+    Player.isRandom = !Player.isRandom;
+});
+
 function formSubmit(){
+    clearTitleDisplay();
     var mode = $('#cboModeSelector').val();
     var tags = $('#txtTags').val();
     var window = $('#cboWindowSelector').val();
@@ -118,12 +150,45 @@ function show_nothing_found(){
                 text  : 'Nothing matches your demands, your highness...'} ).appendTo('#content-target');
 }
 
+function clearTitleDisplay(){
+    clearInterval(scrollingInterval);
+    var titleDisplay = document.getElementById('player-current-title');
+    while(titleDisplay.firstChild){
+        titleDisplay.removeChild(titleDisplay.firstChild);
+    }
+    return titleDisplay;
+}
+
+function scrollTitleDisplay(element, step){
+    var titleDisplay = element;
+    var scrollPos = titleDisplay.scrollWidth - titleDisplay.offsetWidth;
+    if(titleDisplay.scrollLeft >= scrollPos){
+        scrollOverflow++;
+        if(scrollOverflow == 6){
+            titleDisplay.scrollLeft = 0;
+            scrollOverflow = 0;
+        }
+    } else {
+        titleDisplay.scrollLeft += step;
+    }
+}
+
 Player.togglePlayCallback = function(playerInfo){
 
     if(playerInfo.sound){
         var sound = playerInfo.sound;
-        var titleDisplay = document.getElementById('player-current-title');
-        titleDisplay.textContent = sound.user.username + ' - ' + sound.title;
+        var titleDisplay = clearTitleDisplay();
+        trackLink = document.createElement('a');
+        trackLink.setAttribute('href', sound.permalink_url);
+        trackLink.setAttribute('target', '_blank');
+        trackLink.textContent = (sound.user.username + ' - ' + sound.title);
+        titleDisplay.appendChild(trackLink);
+        document.title = titleDisplay.textContent;
+        if(titleDisplay.scrollWidth > titleDisplay.offsetWidth){
+            scrollingInterval = setInterval(function(){
+                scrollTitleDisplay(titleDisplay, 5);
+            }, 500);
+        }
     }
 
     if(playerInfo.isPlaying)

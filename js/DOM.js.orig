@@ -3,6 +3,31 @@ DOM.js
 author: morgl
 */
 
+<<<<<<< HEAD
+var scrollingInterval;
+var scrollOverflow = 0;
+
+=======
+>>>>>>> e2532dfd99df4e41bed892232e2ccc337d639060
+$( document ).ready(function() {
+    $("#cboModeSelector").ionRangeSlider({
+        grid: true,
+        hide_min_max: true,
+        from: 3,
+        values: ["Buzzy", "Trendy", "Groovy"]
+    });
+    $("#cboWindowSelector").ionRangeSlider({
+        grid: true,
+        hide_min_max: true,
+        from: 3,
+        values: ["Last week", "Last 2 weeks", "Last month"]
+    });
+});
+
+$('.tags-container').on('focus', 'input', function(){
+    $(this).removeAttr('placeholder');
+});
+
 function onTrackShow(evt){
     var trackCount = Player.getTrackCount();
     Player.addTracks(evt.tracks);
@@ -14,8 +39,9 @@ function onTrackShow(evt){
         if ( track.artwork_url ) {
             $( '<img />', { src : track.artwork_url.replace('large','t200x200') } ).appendTo(miniatureContainer);
         }
-        $( '<span>', { 'data-trackindex': trackCount + i, class : 'miniature-play play glyphicon glyphicon-play' } ).appendTo(miniatureContainer);
-        $('#content-target').append(itemContainer);
+        $( '<span>', { 'data-trackindex': trackCount + i, class : 'miniature-play play glyphicon glyphicon-play' }     ).appendTo(miniatureContainer);
+        $( '<button>', { class : 'close', text : 'x', 'data-trackindex': trackCount + i } ).appendTo(miniatureContainer);
+        itemContainer.appendTo('#content-target').hide().fadeIn(600);
     }
     if(evt.finish){
         unloading();
@@ -28,33 +54,58 @@ function onTrackShow(evt){
 $( "#content-target" ).on( "click", ".play, .pause", function() {
     var $this = $(this);
     $this.toggleClass("play glyphicon-play pause glyphicon-pause");
-    if(!Player.isPlaying)
-        Player.play($this.data('trackindex'));
+    if(!Player.isPlaying){
+        loading();
+        if(!Player.play($this.data('trackindex')))
+            unloading();
+    }
     else {
         var myIndex = $(this).data('trackindex');
         if(Player.currentIndex == myIndex)
             Player.pause();
-        else
-            Player.play(myIndex);
+        else{
+            loading();
+            if(!Player.play(myIndex))
+                unloading();
+        }
     }
 });
 
 $( '#player-control-play' ).click(function(){
-    if(!Player.isPlaying)
-        Player.play();
+    if(!Player.isPlaying){
+        loading();
+        if(!Player.play())
+            unloading();
+    }
     else
         Player.pause();
 });
 
 $( '#player-control-backward' ).click(function(){
-    Player.backward();
+    loading();
+    if(!Player.backward())
+        unloading();
 });
 
 $( '#player-control-forward' ).click(function(){
-    Player.forward();
+    loading();
+    if(!Player.forward())
+        unloading();
+});
+
+
+$( "#content-target" ).on( "click", ".close", function() {
+    trackIndex = $(this).attr("data-trackindex")
+    console.log( trackIndex );
+});
+    
+$( '#player-control-random' ).click(function(){
+    var $this = $(this).toggleClass('btn-active');
+    Player.isRandom = !Player.isRandom;
 });
 
 function formSubmit(){
+    clearTitleDisplay();
     var mode = $('#cboModeSelector').val();
     var tags = $('#txtTags').val();
     var window = $('#cboWindowSelector').val();
@@ -70,38 +121,74 @@ function loading(){
     $('#overlay').append( $( '<div>', { id : 'loading' } ) );
 };
 
-<<<<<<< HEAD
 function unloading(){
     $('#overlay').removeClass('loading');
     $('#loading').remove();
 };
 
-
 function show_nothing_found(){
+    $('#player-control-play').find('.glyphicon').removeClass('glyphicon-pause').addClass('glyphicon-play');
     $('#content-target').html('');
-    $( '<img />', { src   : 'img/badass.png', 
-                    alt   : 'not found', 
+    $( '<img />', { src   : 'img/badass.png',
+                    alt   : 'not found',
                     class : 'placeholders' } ).appendTo('#content-target');
-    $( '<p>', { class : 'badass', 
-                text  : 'Watch out we got a badass over here' } ).appendTo('#content-target');
-    $( '<p>', { class : 'nothing', 
+    $( '<p>', { class : 'badass',
+                text  : 'Watch out, we got a badass over here' } ).appendTo('#content-target');
+    $( '<p>', { class : 'nothing',
                 text  : 'Nothing matches your demands, your highness...'} ).appendTo('#content-target');
 }
 
-Player.togglePlayCallback = function(isPlaying){
-    var span = $('#player-control-play').find('.glyphicon');
-    if((Player.isPlaying && span.hasClass('glyphicon-play')) ||
-      (!Player.isPlaying && span.hasClass('glyphicon-pause')))
-    span.toggleClass('glyphicon-play').toggleClass('glyphicon-pause');
-=======
+function clearTitleDisplay(){
+    clearInterval(scrollingInterval);
+    var titleDisplay = document.getElementById('player-current-title');
+    while(titleDisplay.firstChild){
+        titleDisplay.removeChild(titleDisplay.firstChild);
+    }
+    return titleDisplay;
+}
+
+function scrollTitleDisplay(element, step){
+    var titleDisplay = element;
+    var scrollPos = titleDisplay.scrollWidth - titleDisplay.offsetWidth;
+    if(titleDisplay.scrollLeft >= scrollPos){
+        scrollOverflow++;
+        if(scrollOverflow == 6){
+            titleDisplay.scrollLeft = 0;
+            scrollOverflow = 0;
+        }
+    } else {
+        titleDisplay.scrollLeft += step;
+    }
+}
+
 Player.togglePlayCallback = function(playerInfo){
+
+    if(playerInfo.sound){
+        var sound = playerInfo.sound;
+        var titleDisplay = clearTitleDisplay();
+        trackLink = document.createElement('a');
+        trackLink.setAttribute('href', sound.permalink_url);
+        trackLink.setAttribute('target', '_blank');
+        trackLink.textContent = (sound.user.username + ' - ' + sound.title);
+        titleDisplay.appendChild(trackLink);
+        document.title = titleDisplay.textContent;
+        if(titleDisplay.scrollWidth > titleDisplay.offsetWidth){
+            scrollingInterval = setInterval(function(){
+                scrollTitleDisplay(titleDisplay, 5);
+            }, 500);
+        }
+    }
+
+    if(playerInfo.isPlaying)
+        unloading();
+
     var headerPlay = $('#player-control-play').find('.glyphicon');
     var miniaturePlay = $('.miniature-play[data-trackindex='+playerInfo.trackIndex+']');
     $('.miniature-play.pause').toggleClass('play glyphicon-play pause glyphicon-pause');
+
     if((playerInfo.isPlaying && headerPlay.hasClass('glyphicon-play')) ||
       (!playerInfo.isPlaying && headerPlay.hasClass('glyphicon-pause'))){
         headerPlay.toggleClass('glyphicon-play glyphicon-pause');
     }
     miniaturePlay.toggleClass('play glyphicon-play pause glyphicon-pause');
->>>>>>> 3596257e77e1a6cc1631d7af0165bc4fa697b374
 }

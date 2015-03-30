@@ -1,15 +1,22 @@
 /*
  * Base structure
  */
+html {
+  position: relative;
+  min-height: 100%;
+}
 
 a, a:hover, a:focus, a:active {
-    color: #908c8c;
+    color: #ffffff;
+    text-decoration: none;
 }
+
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
   padding-top: 50px;
+  /* Margin bottom by footer height */
+  margin-bottom: 50px;
 }
-
 
 /*
  * Global add-ons
@@ -72,6 +79,29 @@ body {
 
 
 /*
+ * Footer
+ */
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 9999;    
+  /* Set the fixed height of the footer here */
+  height: 25px;
+  line-height: 25px;    
+  text-align:center;
+  background-color: #ff6600;
+}
+
+.footer p {
+  color:#ffffff;
+  margin: 0;
+  font-size: 0.75em;
+  font-style: italic;
+}
+
+/*
  * Main content
  */
 
@@ -88,6 +118,25 @@ body {
   margin-top: 0;
 }
 
+/*
+ * Main page
+ */
+
+.jumbotron{
+    color: #ff6600; 
+    background-color: #f5f5f5;
+}
+.jumbotron .lead{
+    font-size:1.4em;
+}
+
+.presentation h4{
+    color: #ff6600; 
+}
+
+.presentation p{
+    text-align: justify;
+}
 
 /*
  * Placeholder dashboard ideas
@@ -120,7 +169,7 @@ body {
   color: #ecf0f1;
 }
 .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
-  color: #ffbbbc;
+  color: #ffffff;
 }
 .navbar-default .navbar-text {
   color: #ecf0f1;
@@ -129,7 +178,7 @@ body {
   color: #ecf0f1;
 }
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
-  color: #ffbbbc;
+  color: #ffffff;
 }
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
   color: #ffbbbc;
@@ -182,7 +231,7 @@ body {
 }
 
 .nav-sidebar > li{
-  width:80%;
+  width:152px;
   text-align:center;
   margin:auto;
 }
@@ -192,7 +241,7 @@ body {
  */
 
 .miniature {
-  height:100%;
+  height:100%;  
 }
 
 .miniature:hover {
@@ -201,44 +250,57 @@ body {
   cursor: pointer;
 }
 
+.miniature img{
+  border-radius: 10px;
+  width:100%;
+  max-width: 200px;
+}
+
 .play {
   z-index: 9999;
   opacity: 0;
   color: #ff6600;
-  width: 30%;
-  height: 40%;
   font-size:80px;
   margin: auto;
   position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
+  top: 30%; left: 0; bottom: 0; right: 0;
 }
+
+.pause {
+  z-index: 9999;
+  opacity: 1;
+  color: #ff6600;
+  font-size:80px;
+  margin: auto;
+  position: absolute;
+  top: 30%; left: 0; bottom: 0; right: 0;
+}
+
 
 .miniature:hover .play {
   opacity: 1;
 }
 
-.pause {
-  z-index: 9999;
-  color: #ff6600;
-  width: 30%;
-  height: 40%;
-  font-size:80px;
-  margin: auto;
+.miniature .close {
   position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
 }
 
 /*
  * Other
  */
 
+#player-current-title {
+    overflow: hidden;
+    width: 400px;
+    height: 20px;
+}
 
-#player-iframe {
-  display: none;
+#player-current-title a{
+    white-space: nowrap;
 }
 
 .label-info {
-  background-color: #ff6600;
+    background-color: #ff6600;
 }
 
 .bootstrap-tagsinput {
@@ -252,7 +314,7 @@ body {
     outline: none;
 }
 
-.btn-default:hover, .btn-default:active {
+.btn-default:hover, .btn-default:active, .btn-default.btn-active {
     color: #fff;
     background-color: #db5e0b;
     border-color:transparent;
@@ -293,4 +355,19 @@ body {
 .nothing {
     font-style: italic;
     color: #908c8c;
+}
+
+.btn:focus, .btn:active:focus, .btn.active:focus, .close:focus, .close:active:focus, .btn.close:focus{
+    outline: 0 none;
+}
+
+/*
+ * Modal
+ */
+
+.modal-title, .modal-body{
+    color: #ffffff;
+}
+.modal-content{
+    background-color: #ff6600;
 }

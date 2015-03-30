@@ -10,6 +10,7 @@ var Player = (function(){
     me.isPaused = false;
     me.togglePlayCallback;
     me.currentIndex = 0;
+    me.isRandom = false;
 
     var currentSound;
     var loadTracks = [];
@@ -53,6 +54,11 @@ var Player = (function(){
     me.addTracks = function(tracks){
         loadTracks = loadTracks.concat(tracks);
     };
+    
+    me.removeTrack = function(trackindex){
+        if(loadTracks.length > trackindex)
+            loadTracks.splice(trackindex, 1);
+    };
 
     me.clearTracks = function(){
         loadTracks = [];
@@ -66,8 +72,12 @@ var Player = (function(){
     me.forward = function(){
         if((loadTracks.length - 1) > me.currentIndex){
             me.isPaused = false;
-            me.currentIndex++;
-            currentSound.stop();
+            if(me.isRandom)
+                me.currentIndex = getRandomInt(0, loadTracks.length - 1);
+            else
+                me.currentIndex++;
+            if(currentSound)
+                currentSound.stop();
             return me.play();
         }
         return false;
@@ -76,15 +86,20 @@ var Player = (function(){
     me.backward = function(){
         if(me.currentIndex > 0){
             me.isPaused = false;
-            currentSound.stop();
-            me.currentIndex--;
+            if(currentSound)
+                currentSound.stop();
+            if(me.isRandom)
+                me.currentIndex = getRandomInt(0, loadTracks.length - 1);
+            else
+                me.currentIndex--;
             return me.play();
         }
         return false;
     };
 
     me.pause = function(){
-        currentSound.pause();
+        if(currentSound)
+            currentSound.pause();
         me.isPlaying = false;
         me.isPaused = true;
         if(me.togglePlayCallback){
@@ -121,6 +136,10 @@ var Player = (function(){
 
     function asyncCall(fn, params){
         setTimeout(function(){fn(params)},0);
+    }
+
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
     return me;
