@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="SoundBlast">
+    <meta name="author" content="guilhermevrs, morgl">
+    <!--<link rel="icon" href="img/favicon.ico">-->
+    <title>SoundBlast</title>
+
+    <!-- CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-tagsinput.css" rel="stylesheet">
+    <link href="css/ion.rangeSlider.css" rel="stylesheet">
+    <link href="css/ion.rangeSlider.skinNice.css" rel="stylesheet">
+    <link href="css/soundbuzz.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <nav class="navbar-default navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="./index.html">SoundBlast</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul id="player-controls" class="nav navbar-nav">
+            <li>
+              <div class="navbar-form form-inline" role="form">
+                <div class="form-group">
+                  <button id="player-control-backward" type="button" class="btn btn-default" aria-label="Left Align">
+                <span class="glyphicon glyphicon-backward"></span>
+</button>
+                 <button id="player-control-play" type="button" class="btn btn-default" aria-label="Left Align">
+                <span class="glyphicon glyphicon-play"></span>
+</button>
+                 <button id="player-control-forward" type="button" class="btn btn-default" aria-label="Left Align">
+                <span class="glyphicon glyphicon-forward"></span>
+</button>
+                 <button id="player-control-random" type="button" class="btn btn-default" aria-label="Left Align">
+                <span class="glyphicon glyphicon-random"></span>
+</button>
+                </div>
+              </div>
+            </li>
+            <li>
+              <p id="player-current-title" class="navbar-text"></p>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li data-toggle="modal" data-target="#about"><a href="#">About</a></li>
+          </ul> 
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+        <form role="form" onsubmit="return formSubmit()">
+          <ul class="nav nav-sidebar placeholders">
+            <li>
+                <div class="form-group">
+                    <input type="text" id="cboModeSelector" class="form-control" value="" />
+                </div>
+            </li>
+          </ul>
+          <ul class="nav nav-sidebar placeholders">
+            <li>
+                <div class="form-group">
+                    <input type="text" id="cboWindowSelector" class="form-control" value="" />
+                </div>
+            </li>
+          </ul>
+          <ul class="nav nav-sidebar placeholders">
+            <li class="tags-container">
+              <input type="text" id="txtTags" class="form-control" placeholder="Choose tags" value="" data-role="tagsinput"/>
+            </li>
+          </ul>
+          <ul class="nav nav-sidebar placeholders">
+            <li>
+              <input class="btn btn-default" type="submit" value="Get me some dope!">
+            </li>
+          </ul>
+        </form>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <div id="content-target" class="row placeholders">
+              <div class="jumbotron">
+                <h1>SoundBlast</h1>
+                <p class="lead">For music aficionados, users of Soundcloud (or not), life enjoyers, samba lovers and brasilian pagode fans. SoundBlast helps you find some new trendy tracks that you will definitely love.</p>
+                <p><img src="http://connect.soundcloud.com/2/btn-connect-sc-l.png"></p>
+              </div>
+              <div class="row presentation">
+                <div class="col-lg-6">
+                  <h4>Only 3 choices to start</h4>
+                  <p class="placeholders">Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum. Cras mattis consectetur purus sit amentis.</p>
+                  <h4>Link your Soundcloud account</h4>
+                  <p class="placeholders">Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum. Cras mattis consectetur purus sit amentis.</p>
+                  <h4>Open Source</h4>
+                  <p class="placeholders">Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum. Cras mattis consectetur purus sit amentis.</p>
+                </div>
+                <div class="col-lg-6">
+                  <h4>Buzz predictive engine</h4>
+                  <p class="placeholders">Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum. Cras mattis consectetur purus sit amentis.</p>
+                  <h4>Be first to listen to future buzzy tracks</h4>
+                  <p class="placeholders">Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum. Cras mattis consectetur purus sit amentis.</p> 
+                  <h4>Obvisouly, it's free!</h4>
+                  <p class="placeholders">Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum. Cras mattis consectetur purus sit amentis.</p>
+                </div>
+              </div>
+          </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Something about us</h4>
+              </div>
+              <div class="modal-body">
+                <p class="text-center">
+                    <img src="" alt="Guilhermevrs" class="img-thumbnail">
+                    <img src="" alt="Morgl" class="img-thumbnail">
+                </p>
+                <p class="text-justify">Post hoc impie perpetratum quod in aliis quoque iam timebatur, tamquam licentia crudelitati indulta per suspicionum nebulas aestimati quidam noxii damnabantur. quorum pars necati, alii puniti bonorum multatione actique laribus suis extorres nullo sibi relicto praeter querelas et lacrimas, stipe conlaticia victitabant, et civili iustoque imperio ad voluntatem converso cruentam, claudebantur opulentae domus et clarae.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="footer">
+            <p class="text-center">Morgl &amp; Guilhermevrs 2015. Powered by Soundcloud API.</p>
+        </footer>
+        <div id="overlay">
+        </div>
+      </div>
+    </div>
+      
+    <!-- ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery-1.11.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-tagsinput.min.js"></script>
+    <script src="js/ion.rangeSlider.min.js"></script>
+    <script src="http://connect.soundcloud.com/sdk.js"></script>
+    <script src="js/Soundbuzz.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/DOM.js"></script>
+  </body>
+</html>

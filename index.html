@@ -1,157 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="SoundBlast">
     <meta name="author" content="guilhermevrs, morgl">
-    <!--<link rel="icon" href="img/favicon.ico">-->
+
     <title>SoundBlast</title>
 
-    <!-- CSS -->
+    <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/bootstrap-tagsinput.css" rel="stylesheet">
-    <link href="css/ion.rangeSlider.css" rel="stylesheet">
-    <link href="css/ion.rangeSlider.skinNice.css" rel="stylesheet">
-    <link href="css/soundbuzz.css" rel="stylesheet">
-  </head>
+    <!-- Custom CSS -->
+    <link href="css/grayscale.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 
-  <body>
-    <nav class="navbar-default navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="./index.html">SoundBlast</a>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">
+                    <span class="light">Start</span> Bootstrap
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#about">About</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#download">Download</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul id="player-controls" class="nav navbar-nav">
-            <li>
-              <div class="navbar-form form-inline" role="form">
-                <div class="form-group">
-                  <button id="player-control-backward" type="button" class="btn btn-default" aria-label="Left Align">
-                <span class="glyphicon glyphicon-backward"></span>
-</button>
-                 <button id="player-control-play" type="button" class="btn btn-default" aria-label="Left Align">
-                <span class="glyphicon glyphicon-play"></span>
-</button>
-                 <button id="player-control-forward" type="button" class="btn btn-default" aria-label="Left Align">
-                <span class="glyphicon glyphicon-forward"></span>
-</button>
-                 <button id="player-control-random" type="button" class="btn btn-default" aria-label="Left Align">
-                <span class="glyphicon glyphicon-random"></span>
-</button>
-                </div>
-              </div>
-            </li>
-            <li>
-              <p id="player-current-title" class="navbar-text"></p>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li data-toggle="modal" data-target="#about"><a href="#">About</a></li>
-          </ul> 
-        </div><!--/.nav-collapse -->
-      </div>
+        <!-- /.container -->
     </nav>
 
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-        <form role="form" onsubmit="return formSubmit()">
-          <ul class="nav nav-sidebar placeholders">
-            <li>
-                <div class="form-group">
-                    <input type="text" id="cboModeSelector" class="form-control" value="" />
+    <!-- Intro Header -->
+    <header class="intro">
+        <div class="intro-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <h1 class="brand-heading">SoundBlast</h1>
+                        <p class="intro-text">Searching the web for the best music.</p>
+                        <a href="#about" class="btn btn-circle page-scroll">
+                            <i class="glyphicon glyphicon-menu-down animated"></i>
+                        </a>
+                    </div>
                 </div>
-            </li>
-          </ul>
-          <ul class="nav nav-sidebar placeholders">
-            <li>
-                <div class="form-group">
-                    <input type="text" id="cboWindowSelector" class="form-control" value="" />
-                </div>
-            </li>
-          </ul>
-          <ul class="nav nav-sidebar placeholders">
-            <li class="tags-container">
-              <input type="text" id="txtTags" class="form-control" placeholder="Choose tags" value="" data-role="tagsinput"/>
-            </li>
-          </ul>
-          <ul class="nav nav-sidebar placeholders">
-            <li>
-              <input class="btn btn-default" type="submit" value="Get me some dope!">
-            </li>
-          </ul>
-        </form>
-        </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <div id="content-target" class="row placeholders">
-              <div class="jumbotron">
-                <h1>SoundBlast</h1>
-                <p class="lead">For music aficionados, users of Soundcloud (or not), life enjoyers, samba lovers and brasilian pagode fans. SoundBlast helps you find some new trendy tracks that you will definitely love.</p>
-                <p><img src="http://connect.soundcloud.com/2/btn-connect-sc-l.png"></p>
-              </div>
-              <div class="row presentation">
-                <div class="col-lg-6">
-                  <h4>Only 3 choices to start</h4>
-                  <p class="placeholders">Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum. Cras mattis consectetur purus sit amentis.</p>
-                  <h4>Link your Soundcloud account</h4>
-                  <p class="placeholders">Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum. Cras mattis consectetur purus sit amentis.</p>
-                  <h4>Open Source</h4>
-                  <p class="placeholders">Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum. Cras mattis consectetur purus sit amentis.</p>
-                </div>
-                <div class="col-lg-6">
-                  <h4>Buzz predictive engine</h4>
-                  <p class="placeholders">Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum. Cras mattis consectetur purus sit amentis.</p>
-                  <h4>Be first to listen to future buzzy tracks</h4>
-                  <p class="placeholders">Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum. Cras mattis consectetur purus sit amentis.</p> 
-                  <h4>Obvisouly, it's free!</h4>
-                  <p class="placeholders">Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum. Cras mattis consectetur purus sit amentis.</p>
-                </div>
-              </div>
-          </div>
-        </div>
-        <!-- Modal -->
-        <div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Something about us</h4>
-              </div>
-              <div class="modal-body">
-                <p class="text-center">
-                    <img src="" alt="Guilhermevrs" class="img-thumbnail">
-                    <img src="" alt="Morgl" class="img-thumbnail">
-                </p>
-                <p class="text-justify">Post hoc impie perpetratum quod in aliis quoque iam timebatur, tamquam licentia crudelitati indulta per suspicionum nebulas aestimati quidam noxii damnabantur. quorum pars necati, alii puniti bonorum multatione actique laribus suis extorres nullo sibi relicto praeter querelas et lacrimas, stipe conlaticia victitabant, et civili iustoque imperio ad voluntatem converso cruentam, claudebantur opulentae domus et clarae.</p>
-              </div>
             </div>
-          </div>
         </div>
-        <footer class="footer">
-            <p class="text-center">Morgl &amp; Guilhermevrs 2015. Powered by Soundcloud API.</p>
-        </footer>
-        <div id="overlay">
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="container content-section text-center">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>About Grayscale</h2>
+                <p>Grayscale is a free Bootstrap 3 theme created by Start Bootstrap. It can be yours right now, simply download the template on <a href="http://startbootstrap.com/template-overviews/grayscale/">the preview page</a>. The theme is open source, and you can use it for any purpose, personal or commercial.</p>
+                <p>This theme features stock photos by <a href="http://gratisography.com/">Gratisography</a> along with a custom Google Maps skin courtesy of <a href="http://snazzymaps.com/">Snazzy Maps</a>.</p>
+                <p>Grayscale includes full HTML, CSS, and custom JavaScript files along with LESS files for easy customization.</p>
+            </div>
         </div>
-      </div>
-    </div>
-      
-    <!-- ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="content-section text-center">
+        <div class="download-section">
+            <div class="container">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <h2>Download Grayscale</h2>
+                    <p>You can download Grayscale for free on the preview page at Start Bootstrap.</p>
+                    <a href="http://startbootstrap.com/template-overviews/grayscale/" class="btn btn-default btn-lg">Visit Download Page</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="container content-section text-center">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>Contact Start Bootstrap</h2>
+                <p>Feel free to email us to provide some feedback on our templates, give us suggestions for new templates and themes, or to just say hello!</p>
+                <p><a href="mailto:feedback@startbootstrap.com">feedback@startbootstrap.com</a>
+                </p>
+                <ul class="list-inline banner-social-buttons">
+                    <li>
+                        <a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/IronSummitMedia/startbootstrap" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+                    </li>
+                    <li>
+                        <a href="https://plus.google.com/+Startbootstrap/posts" class="btn btn-default btn-lg"><i class="fa fa-google-plus fa-fw"></i> <span class="network-name">Google+</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p>Copyright &copy; Your Website 2014</p>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
     <script src="js/jquery-1.11.2.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/bootstrap-tagsinput.min.js"></script>
-    <script src="js/ion.rangeSlider.min.js"></script>
-    <script src="http://connect.soundcloud.com/sdk.js"></script>
-    <script src="js/Soundbuzz.js"></script>
-    <script src="js/player.js"></script>
-    <script src="js/DOM.js"></script>
-  </body>
+
+    <!-- Plugin JavaScript -->
+    <script src="js/jquery.easing.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="js/grayscale.js"></script>
+
+</body>
+
 </html>
