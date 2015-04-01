@@ -169,7 +169,7 @@ var SoundBuzz = (function(){
 
 SC.initialize({
   client_id: '581b5c41bbf8308284bfa16743d9c86d',
-  redirect_uri: 'http://localhost/soundbuzz/callback.html'   
+  redirect_uri: 'http://morganlema.fr/callback.html'   
 });
 
 $( '.connect' ).click(function(){
