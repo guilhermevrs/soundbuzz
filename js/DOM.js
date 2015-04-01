@@ -116,6 +116,35 @@ $( '#player-control-random' ).click(function(){
     Player.isRandom = !Player.isRandom;
 });
 
+$( '#player-control-like' ).click(function(){
+    $this = $(this)
+    if (SC.isConnected()) {
+        currentTrack = Player.getCurrentTrack();
+        currentTrackID = currentTrack.id
+        var likeExists = SC.get('/me/favorites/', function(tracks) {
+           for(var i = 0; i < tracks.length; i++){
+               if (tracks[i].id == currentTrackID){
+                   SC.delete('/me/favorites/' + currentTrackID, function(){
+                       if($this.hasClass("liked")){
+                          $this.removeClass("liked");
+                       }
+                   });
+                   return false;
+               }
+           }
+           SC.put('/me/favorites/' + currentTrackID, function(){
+               if(!$this.hasClass("liked")){
+                  $this.addClass("liked");
+               }
+           });
+           return true;
+        });
+    } 
+    else {
+        connection();
+    }
+});
+
 function formSubmit(){
     clearTitleDisplay();
     var mode = $('#cboModeSelector').val();
@@ -203,13 +232,30 @@ Player.togglePlayCallback = function(playerInfo){
         headerPlay.toggleClass('glyphicon-play glyphicon-pause');
     }
     miniaturePlay.toggleClass('play glyphicon-play pause glyphicon-pause');
+    
+    if (SC.isConnected()) {
+        currentTrack = Player.getCurrentTrack();
+        currentTrackID = currentTrack.id;
+        var likeExists = SC.get('/me/favorites/', function(tracks) {
+           for(var i = 0; i < tracks.length; i++){
+               if (tracks[i].id == currentTrackID){
+                   if(!$("#player-control-like").hasClass("liked")){
+                        $("#player-control-like").addClass("liked");
+                   }
+                   return true;
+               }
+           }
+           if($("#player-control-like").hasClass("liked")){
+               $("#player-control-like").removeClass("liked");
+           }
+           return false;
+        });
+    } 
 }
 
 function welcome(username, permalink){
-    if (! ($('.welcome').length) ){
-        var textContainer = $( "<ul>", { class: "nav nav-sidebar welcome placeholders"} );
-        var userLink = "<a href='https://www.soundcloud.com/" + permalink + "'>" + username + "</a>" 
-        textContainer.append("<li class='text-muted'>Welcome, " + userLink +" !</li>");
-        $('#form').prepend(textContainer);
-    }
+    var textContainer = $( "<ul>", { class: "nav nav-sidebar welcome placeholders"} );
+    var userLink = "<a href='https://www.soundcloud.com/" + permalink + "'>" + username + "</a>" 
+    textContainer.append("<li class='text-muted'>Welcome, " + userLink +" !</li>");
+    $('#form').prepend(textContainer);
 }

@@ -53,9 +53,9 @@ var SoundBuzz = (function(){
         var endTime = new Date();
         var step;
         switch(me.windowMode){
-            case '1week': step = 2; break;
-            case '2weeks': step = 4; break;
-            case 'month':
+            case 'Lat week': step = 2; break;
+            case 'Last 2 weeks': step = 4; break;
+            case 'Last month':
             default: step = 8; break;
         }
         var decrement = (me.iteration) * step;
@@ -96,9 +96,9 @@ var SoundBuzz = (function(){
         var topFunc;
         var bottomFunc;
         switch(me.mode){
-            case 'buzzy': bottomFunc = _buzzyAlgo; break;
-            case 'trendy': bottomFunc = _trendyAlgo; topFunc = _buzzyAlgo; break;
-            case 'groovy': default:bottomFunc = _groovyAlgo; topFunc = _trendyAlgo; break;
+            case 'Buzzy': bottomFunc = _buzzyAlgo; break;
+            case 'Trendy': bottomFunc = _trendyAlgo; topFunc = _buzzyAlgo; break;
+            case 'Groovy': default:bottomFunc = _groovyAlgo; topFunc = _trendyAlgo; break;
         }
 
         var filteredTracks = [];
@@ -173,14 +173,21 @@ SC.initialize({
 });
 
 $( '.connect' ).click(function(){
-    client_conn = SC.connect(function() {
-      SC.get('/me', function(me) { 
-        welcome(me.username, me.permalink);
-      });
-      //SC.put('/me/favorites/84491202');    
-    }); 
+    if (SC.isConnected()) {
+        alert('already connected');
+    }   
+    else {
+        connection();
+    }
 });
 
+function connection(){
+    SC.connect(function() {
+        SC.get('/me', function(me) { 
+            welcome(me.username, me.permalink);
+        });  
+    }); 
+};
 
 /*SC.get('/playlists/19351492', function(playlist) {
   for (var i = 0; i < playlist.tracks.length; i++) {

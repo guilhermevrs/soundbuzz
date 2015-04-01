@@ -50,7 +50,11 @@ var Player = (function(){
 
         return true;
     };
-
+    
+    me.getCurrentTrack = function(){
+        return loadTracks[me.currentIndex];
+    };
+    
     me.addTracks = function(tracks){
         loadTracks = loadTracks.concat(tracks);
     };

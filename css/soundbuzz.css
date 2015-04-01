@@ -256,6 +256,14 @@ body {
   max-width: 200px;
 }
 
+.miniature:hover .play {
+  opacity: 1;
+}
+
+.miniature .close {
+  position: absolute;
+}
+
 .play {
   z-index: 999;
   opacity: 0;
@@ -276,19 +284,6 @@ body {
   top: 30%; left: 0; bottom: 0; right: 0;
 }
 
-
-.miniature:hover .play {
-  opacity: 1;
-}
-
-.miniature .close {
-  position: absolute;
-}
-
-/*
- * Other
- */
-
 #player-current-title {
     overflow: hidden;
     width: 400px;
@@ -298,6 +293,15 @@ body {
 #player-current-title a{
     white-space: nowrap;
 }
+
+.liked{
+    background-color: #db5e0b !important;
+}
+
+/*
+ * Other
+ */
+
 
 .label-info {
     background-color: #ff6600;
