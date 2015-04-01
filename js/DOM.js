@@ -120,25 +120,27 @@ $( '#player-control-like' ).click(function(){
     $this = $(this)
     if (SC.isConnected()) {
         currentTrack = Player.getCurrentTrack();
-        currentTrackID = currentTrack.id
-        var likeExists = SC.get('/me/favorites/', function(tracks) {
-           for(var i = 0; i < tracks.length; i++){
-               if (tracks[i].id == currentTrackID){
-                   SC.delete('/me/favorites/' + currentTrackID, function(){
-                       if($this.hasClass("liked")){
-                          $this.removeClass("liked");
-                       }
-                   });
-                   return false;
+        if (currentTrack){
+            currentTrackID = currentTrack.id
+            var likeExists = SC.get('/me/favorites/', function(tracks) {
+               for(var i = 0; i < tracks.length; i++){
+                   if (tracks[i].id == currentTrackID){
+                       SC.delete('/me/favorites/' + currentTrackID, function(){
+                           if($this.hasClass("liked")){
+                              $this.removeClass("liked");
+                           }
+                       });
+                       return false;
+                   }
                }
-           }
-           SC.put('/me/favorites/' + currentTrackID, function(){
-               if(!$this.hasClass("liked")){
-                  $this.addClass("liked");
-               }
-           });
-           return true;
-        });
+               SC.put('/me/favorites/' + currentTrackID, function(){
+                   if(!$this.hasClass("liked")){
+                      $this.addClass("liked");
+                   }
+               });
+               return true;
+            });
+        }
     } 
     else {
         connection();
@@ -258,4 +260,8 @@ function welcome(username, permalink){
     var userLink = "<a href='https://www.soundcloud.com/" + permalink + "'>" + username + "</a>" 
     textContainer.append("<li class='text-muted'>Welcome, " + userLink +" !</li>");
     $('#form').prepend(textContainer);
+}
+
+function add_like_button(){
+    $("#player-control-like").css("display", "inline")
 }

@@ -173,18 +173,16 @@ SC.initialize({
 });
 
 $( '.connect' ).click(function(){
-    if (SC.isConnected()) {
-        alert('already connected');
-    }   
-    else {
+    if ( !( SC.isConnected() ) ) {
         connection();
-    }
+    }   
 });
 
 function connection(){
     SC.connect(function() {
         SC.get('/me', function(me) { 
             welcome(me.username, me.permalink);
+            add_like_button();
         });  
     }); 
 };
